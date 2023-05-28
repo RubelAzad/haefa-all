@@ -14,6 +14,7 @@ use App\Models\District;
 use App\Models\SelfType;
 use Illuminate\Support\Facades\DB;
 use App\Models\Address;
+use App\Models\Station;
 
 
 
@@ -128,6 +129,8 @@ class PatientController extends Controller
         $patient->IdOwner = $request->patientInfo['SelfType'];
         $patient->WorkPlaceId =$request->patientInfo['WorkPlace'];
         $patient->WorkPlaceBranchId = $request->patientInfo['WorkBranch'];
+        $patient->BarCode = $request->patientInfo['BarCode'];
+        $patient->FingerPrint = $request->patientInfo['FingerPrint'];
         $patient->OrgId = $OrgId;
         $patient->usersID = $usersID;
         $patient->Status = 1;
@@ -142,6 +145,17 @@ class PatientController extends Controller
         $patientId=Patient::where('RegistrationId','=',$registrationNo)->first();
         $PatientId=$patientId->PatientId;
 
+        //station start
+        $station = new Station();
+        $station->StationId = Str::uuid();
+        $station->PatientId = $PatientId;
+        $station->StationStatus = $request->stationInfo['StationStatus'];
+        $station->CreateDate = $date;
+        $station->CreateUser = "Azad";
+        $station->UpdateDate = $date;
+        $station->UpdateUser = "Rubel";
+        //station End
+        
         
         //address start
         $address = new Address();
