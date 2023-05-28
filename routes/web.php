@@ -25,16 +25,15 @@ $router->get('/version', function () use ($router) {
 // user route start
 Route::group(['prefix' => 'api'], function ($router) {
     Route::post('login', 'AuthController@login');
-    Route::get('genders', 'PatientController@genders');
-    Route::get('marital-status', 'PatientController@marital-status');
-    Route::get('district', 'PatientController@district');
-    Route::get('patient-ref-data', 'PatientController@index'); //patient get
-    
+    Route::get('genders', 'PatientController@genders'); //genders get
+    Route::get('marital-status', 'PatientController@maritalStatus'); //marital status get
+    Route::get('district', 'PatientController@district');//district get
+    Route::get('self-type', 'PatientController@SelfType'); //self type get
+    Route::get('patient-reg-create', 'PatientController@patientRegCreate'); //patient get
 });
 
 Route::group(['middleware' => 'auth'], function ($router) {
     Route::group(['prefix' => 'api'], function ($router) {
-
         //user logout
         Route::post('logout', 'AuthController@logout');
         //user refresh
@@ -49,9 +48,8 @@ Route::group(['middleware' => 'auth'], function ($router) {
         Route::delete('post/delete/{id}', 'PostController@destroy'); //post delete
         //post route end
         //patient route start
-            // Route::get('patient-ref-data', 'PatientController@index'); //patient get
-            Route::post('patient/create', 'PatientController@store'); //patient create
-
+        // Route::get('patient-ref-data', 'PatientController@index'); //patient get
+        Route::post('patient/create', 'PatientController@store'); //patient create
         //patient route end
     });
 });
