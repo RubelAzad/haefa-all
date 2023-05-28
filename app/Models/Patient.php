@@ -8,7 +8,7 @@ class Patient extends Model
 {
     
     use HasFactory;
-    protected $table = 'Employee';
+    protected $table = 'Patient';
     public $timestamps = false;
 
     public function WorkPlace()
