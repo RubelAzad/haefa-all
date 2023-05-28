@@ -55,3 +55,18 @@ Route::group(['middleware' => 'auth'], function ($router) {
         //patient route end
     });
 });
+
+//Station 4A route start
+    //Chief Complaints route start
+    Route::get('chief-complain-days','Station4AController@chiefComplainDays');
+    //Route::post('');
+    //Chief Complaints route end
+    
+    //Patient H/O Present Illness route start
+     Route::get('present-illness','Station4AController@presentIllness');
+    //Patient H/O Present Illness route end
+    
+    //Patient H/O Present Illness route start
+     Route::get('past-illness','Station4AController@pastIllness');
+    //Patient H/O Present Illness route end
+//Station 4A route end
