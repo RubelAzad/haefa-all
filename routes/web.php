@@ -25,6 +25,9 @@ $router->get('/version', function () use ($router) {
 // user route start
 Route::group(['prefix' => 'api'], function ($router) {
     Route::post('login', 'AuthController@login');
+    Route::get('genders', 'PatientController@genders');
+    Route::get('marital-status', 'PatientController@marital-status');
+    Route::get('district', 'PatientController@district');
     Route::get('patient-ref-data', 'PatientController@index'); //patient get
     
 });
