@@ -87,3 +87,14 @@ Route::group(['middleware' => 'auth'], function ($router) {
     Route::get('adult-vaccination','Station4AController@adultVaccination'); //Adult vaccination
 
 //Station 4A route end
+
+//Station 4B route start
+   //Menstrual History
+   Route::get('patient-s4b-mens-contraception','Station4BController@patientS4bMensContraception');
+   Route::get('patient-s4b-during-menstruation','Station4BController@patientS4bDuringMenstruation');
+   Route::get('patient-s4b-how-often','Station4BController@patientS4bHowOften');
+//Station 4B route end
+
+//Station 4C route start
+
+//Station 4C route end
