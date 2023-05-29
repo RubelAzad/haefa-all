@@ -17,7 +17,7 @@ class Station1Controller extends Controller
      * author :-  API
      * created_by:- Abul Kalam Azad
      * created_at:- 28/05/2023 09:22:54
-     * description :- Patient Genders All Information.
+     * description :- Station 1 All Information.
      */
     public function Blood(){
         try{
@@ -38,9 +38,9 @@ class Station1Controller extends Controller
 
     public function patientHeightWidthCreate(){
 
-        $PatientId=$request->heightWeightInfo['PatientId'];
-        $OrgId=$request->heightWeightInfo['OrgId'];
-        $usersID=$request->heightWeightInfo['usersID'];
+        $PatientId=$request->PatientId;
+        $OrgId=$request->OrgId;
+        $usersID=$request->usersID;
         try{
         DB::beginTransaction();
 
@@ -52,13 +52,13 @@ class Station1Controller extends Controller
         $heightWeight->Id = Str::uuid();
         $heightWeight->PatientId = $PatientId;
         $heightWeight->CollectionDate = $date;
-        $heightWeight->Height = $request->heightWeightInfo['Height'];
-        $heightWeight->Weight = $request->heightWeightInfo['Weight'];
-        $heightWeight->BMI = $request->heightWeightInfo['BMI'];
-        $heightWeight->BMIStatus = $request->heightWeightInfo['BMIClass'];
-        $heightWeight->MUAC = $request->heightWeightInfo['MUAC'];
-        $heightWeight->MUACStatus = $request->heightWeightInfo['MUACClass'];
-        $heightWeight->RefBloodGroupId = $request->heightWeightInfo['RefBloodGroupId'];
+        $heightWeight->Height = $request->Height;
+        $heightWeight->Weight = $request->Weight;
+        $heightWeight->BMI = $request->BMI;
+        $heightWeight->BMIStatus = $request->BMIClass;
+        $heightWeight->MUAC = $request->MUAC;
+        $heightWeight->MUACStatus = $request->MUACClass;
+        $heightWeight->RefBloodGroupId = $request->RefBloodGroupId;
         $heightWeight->Status = 1;
         $heightWeight->CreateDate = $date;
         $heightWeight->CreateUser = "Azad";
