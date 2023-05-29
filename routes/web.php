@@ -57,16 +57,33 @@ Route::group(['middleware' => 'auth'], function ($router) {
 });
 
 //Station 4A route start
-    //Chief Complaints route start
-    Route::get('chief-complain-days','Station4AController@chiefComplainDays');
-    //Route::post('');
-    //Chief Complaints route end
+    //Chief Complaints 
+    Route::get('complaints-list-day','Station4AController@complaintsListDay'); //Complain days get
+    Route::post('complaints-list','Station4AController@complaintsList'); //Matched complaints by cc code
+    Route::post('patient-s4-create','Station4AController@patientS4Create'); //Save chief complain
     
-    //Patient H/O Present Illness route start
-     Route::get('present-illness','Station4AController@presentIllness');
-    //Patient H/O Present Illness route end
+    //Patient H/O Present Illness route 
+     Route::get('present-illness','Station4AController@presentIllness'); //present illness get 
     
-    //Patient H/O Present Illness route start
-     Route::get('past-illness','Station4AController@pastIllness');
-    //Patient H/O Present Illness route end
+    //Patient H/O Present Illness route 
+     Route::get('past-illness','Station4AController@pastIllness'); //past illness get
+
+    // Patient H/O Family Illness
+    Route::get('family-illness','Station4AController@familyIllness'); //get family illness
+
+    //Social History
+    Route::get('social-history','Station4AController@socialHistory'); //get family illness
+    
+    //General Examination
+    Route::get('general-examination','Station4AController@generalExamination'); //get general examination
+
+    //Current medication taken
+    Route::get('current-medication-taken','Station4AController@currentMedicationTaken'); //get current medication taken
+
+    //Patient mental helth
+    Route::get('patient-mental-health','Station4AController@patientMentalHealth'); //patient mental health
+    
+    //Adult vaccination
+    Route::get('adult-vaccination','Station4AController@adultVaccination'); //Adult vaccination
+
 //Station 4A route end
