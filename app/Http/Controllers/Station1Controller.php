@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
+
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use App\Models\RefBloodGroup;
 use App\Models\MDataHeightWeight;
 
@@ -32,7 +33,7 @@ class Station1Controller extends Controller
         }catch (Exception $e) {
             throw new Exception($e->getMessage());
         }  
-        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava data');
     }
 
     public function patientHeightWidthCreate(){
