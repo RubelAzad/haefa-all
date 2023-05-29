@@ -42,7 +42,12 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::post('patient-height-width-create', 'Station1Controller@patientHeightWidthCreate'); // patient Height
 
     //station 2
+    Route::post('patient-blood-pressure-create', 'Station2Controller@patientMDataBPCreate');
 
+    //station 3
+    Route::post('patient-glucose-hemoglobin-create', 'Station3Controller@patientGlucoseHbCreate');
+
+    //
     
 
 
