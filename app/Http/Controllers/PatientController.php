@@ -149,11 +149,12 @@ class PatientController extends Controller
         $station = new Station();
         $station->StationId = Str::uuid();
         $station->PatientId = $PatientId;
-        $station->StationStatus = $request->stationInfo['StationStatus'];
+        $station->StationStatus = '1';
         $station->CreateDate = $date;
         $station->CreateUser = "Azad";
         $station->UpdateDate = $date;
         $station->UpdateUser = "Rubel";
+        $station->save();
         //station End
         
         
@@ -189,10 +190,11 @@ class PatientController extends Controller
         $address->UpdateUser = "Rubel";
         $address->save();
         //address start
-
-
+        return response()->json(['status' => true, 'code'=>200, 'message'=>'Data Save successfully'], 200);
+        DB::commit();
 
         }catch (Exception $e) {
+            DB::rollBack();
             throw new Exception($e->getMessage());
         }  
 
