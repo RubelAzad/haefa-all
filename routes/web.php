@@ -25,11 +25,27 @@ $router->get('/version', function () use ($router) {
 // user route start
 Route::group(['prefix' => 'api'], function ($router) {
     Route::post('login', 'AuthController@login');
+
+    //patient Registration
     Route::get('genders', 'PatientController@genders'); //genders get
     Route::get('marital-status', 'PatientController@maritalStatus'); //marital status get
     Route::get('district', 'PatientController@district');//district get
     Route::get('self-type', 'PatientController@SelfType'); //self type get
     Route::get('patient-reg-create', 'PatientController@patientRegCreate'); //patient get
+
+    //search patient 
+    Route::post('patient-search', 'SearchPatientController@searchPatient');
+
+    
+    //station 1
+    Route::get('patient-blood-group', 'Station1Controller@Blood'); //Blood Group
+    Route::post('patient-height-width-create', 'Station1Controller@patientHeightWidthCreate'); // patient Height
+
+    //station 2
+
+    
+
+
 });
 
 Route::group(['middleware' => 'auth'], function ($router) {

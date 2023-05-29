@@ -39,7 +39,7 @@ class AuthController extends Controller
 
         if (! $token = Auth::attempt($credentials)) {
 
-            return response()->json(['status' => false,'patient'=>$abc, 'code' => 422,'message' => 'Incorrect email or password'],422);
+            return response()->json(['status' => false,'patient'=>'', 'code' => 422,'message' => 'Incorrect email or password'],422);
         }
 
         return $this->respondWithToken($token);
