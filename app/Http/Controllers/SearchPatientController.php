@@ -8,6 +8,22 @@ class SearchPatientController extends Controller
 {
     public function searchPatient(Request $request){
 
+        $searchQuery = $request->query('search');
+        $searchOption = $request->query('option');
+
+        $query = Patient::query();
+
+        if ($searchQuery && $searchOption) {
+            $query->where($searchOption, 'like', '%' . $searchQuery . '%');
+        }
+
+        $data = $query->get();
+
+        return response()->json($data);
+        
+    }
+
+    public function searchPatient1(Request $request){
         
         if($request->Card){
             $patientDetails=Patient::where('RegistrationId','=',$request->Card)->get();
