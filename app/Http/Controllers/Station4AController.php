@@ -80,6 +80,8 @@ class Station4AController extends Controller
                 $Complaint->OrgId  = $Complaints[$i]['OrgId'];
                 $Complaint->save();
            }
+
+           //return 'success';
            //Present illness
            $PresentIllness = $request->PatientHOPresentIllness['PresentIllnesses'];
            for($i=0;$i<count($PresentIllness); $i++){
