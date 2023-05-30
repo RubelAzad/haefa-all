@@ -12,6 +12,10 @@ use App\Models\Gender;
 use App\Models\MaritalStatus;
 use App\Models\District;
 use App\Models\SelfType;
+use Illuminate\Support\Facades\DB;
+use App\Models\Address;
+use App\Models\Station;
+
 
 
 class PatientController extends Controller
@@ -21,90 +25,176 @@ class PatientController extends Controller
     public function __construct(PatientTransformer $PatientTransformer){
         $this->PatientTransformer = $PatientTransformer;
     }
-    public function index(){
-
+    /**
+     * @method_name :- method_name
+     * -------------------------------------------------------- 
+     * @param  :-  {{}|any}
+     * ?return :-  {{}|any}
+     * author :-  API
+     * created_by:- Abul Kalam Azad
+     * created_at:- 28/05/2023 09:22:54
+     * description :- Patient Genders All Information.
+     */
+    public function genders(){
         try{
-
-            
             $Gender = Gender::select('GenderId','GenderCode')->get();
-            $MaritalStatus = MaritalStatus::select('MaritalStatusId','MaritalStatusCode')->get();
-            $District = District::select('Id','districtName')->get();
-            $SelfType = SelfType::select('HeadOfFamilyId','HeadOfFamilyCode')->get();
             $status = [
                 'code' => 200,
-                'message' => 'Patient Ref Data'
+                'message' => 'Gender Information Successfully'
             ];
-            // $data = [
-            //     'Gender' => $Gender,
-            //     'MaritalStatus' => $MaritalStatus,
-            //     'District' => $District,
-            //     'SelfType' => $SelfType
-            // ];
-            // return response()->json([
-            //     'status' => $status,
-            //     'data' => $data
-            // ]);
-
             return response()->json([
                 'status' => $status,
                 'Gender' => $Gender,
-                'MaritalStatus' => $MaritalStatus,
-                'District' => $District,
-                'SelfType' => $SelfType
             ]);
-
-            
-            //return $patient;
-           // return response()->json(['status' => $status,'data'=>$data], 200);
-            //return $this->respondWithCollection($patient, $this->PatientTransformer, true, HttpResponse::HTTP_OK, 'Patient List');
-            //return response()->json(['status' => false,'patient'=>$abc, 'code' => 200,'message' => 'Incorrect email or password'],422);
         }catch (Exception $e) {
             throw new Exception($e->getMessage());
         }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+    }
+    public function maritalStatus(){
+        try{
+            $MaritalStatus = MaritalStatus::select('MaritalStatusId','MaritalStatusCode')->get();
+            $status = [
+                'code' => 200,
+                'message' => 'Marital Status Information Successfully'
+            ];
+            return response()->json([
+                'status' => $status,
+                'MaritalStatus' => $MaritalStatus,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+    }
+    public function district(){
+        try{
+            $District = District::select('Id','districtName')->get();
+            $status = [
+                'code' => 200,
+                'message' => 'District Information Successfully'
+            ];
+            return response()->json([
+                'status' => $status,
+                'District' => $District,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+    }
+    public function SelfType(){
+        try{
+            $SelfType = SelfType::select('HeadOfFamilyId','HeadOfFamilyCode')->get();
+            $status = [
+                'code' => 200,
+                'message' => 'District Information Successfully'
+            ];
+            return response()->json([
+                'status' => $status,
+                'SelfType' => $SelfType,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
     }
 
-    public function store(Request $request){
+    public function patientRegCreate(Request $request){
+
+        $registrationNo=$request->patientInfo['registrationNo'];
+        $OrgId=$request->patientInfo['OrgId'];
+        $usersID=$request->patientInfo['usersID'];
+        try{
+        DB::beginTransaction();
 
         $currentTime = Carbon::now();
         $date=$currentTime->toDateTimeString();
 
-        $patient = new Patient;
-
+        //patient start
+        $patient = new Patient();
         $patient->PatientId = Str::uuid();
-        $patient->WorkPlaceId = Str::uuid();
-        $patient->WorkPlaceBranchId = Str::uuid();
-        $patient->PatientCode = $request->registrationNo;
-        $patient->RegistrationId = $request->registrationNo;
-        $patient->GivenName = $request->fName;
-        $patient->FamilyName = $request->lName;
-        $patient->BirthDate = $request->DOB;
-        $patient->CellNumber = $request->contactNumber;
-        $patient->GenderId = $request->gender;
-        $patient->Age = $request->idType;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
-        $patient->Age = $request->patientAge;
+        $patient->PatientCode = $registrationNo;
+        $patient->RegistrationId = $registrationNo;
+        $patient->GivenName = $request->patientInfo['fName'];
+        $patient->FamilyName = $request->patientInfo['lName'];
+        $patient->Age = $request->patientInfo['patientAge'];
+        $patient->BirthDate = $request->patientInfo['DOB'];
+        $patient->CellNumber = $request->patientInfo['contactNumber'];
+        $patient->GenderId = $request->patientInfo['gender'];
+        $patient->IdType = $request->patientInfo['idType'];
+        $patient->IdNumber = $request->patientInfo['ID'];
+        $patient->MaritalStatusId = $request->patientInfo['MariatalStatus'];
+        $patient->PatientImage = $request->patientInfo['PatientPhoto'];
+        $patient->IdOwner = $request->patientInfo['SelfType'];
+        $patient->WorkPlaceId =$request->patientInfo['WorkPlace'];
+        $patient->WorkPlaceBranchId = $request->patientInfo['WorkBranch'];
+        $patient->BarCode = $request->patientInfo['BarCode'];
+        $patient->FingerPrint = $request->patientInfo['FingerPrint'];
+        $patient->OrgId = $OrgId;
+        $patient->usersID = $usersID;
         $patient->Status = 1;
         $patient->CreateDate = $date;
         $patient->CreateUser = "Azad";
         $patient->UpdateDate = $date;
         $patient->UpdateUser = "Rubel";
-        $patient->OrgId = Str::uuid();
-        if($patient->save()){
-            
-            return response()->json(['status' => true,'patient'=>$abc, 'code' => 200,'message' => 'patient save successfully'],200);
-        }
+        $patient->save();
+        //patient End
+
+        //patient Registration id wise patient id
+        $patientId=Patient::where('RegistrationId','=',$registrationNo)->first();
+        $PatientId=$patientId->PatientId;
+
+        //station start
+        $station = new Station();
+        $station->StationId = Str::uuid();
+        $station->PatientId = $PatientId;
+        $station->StationStatus = $request->stationInfo['StationStatus'];
+        $station->CreateDate = $date;
+        $station->CreateUser = "Azad";
+        $station->UpdateDate = $date;
+        $station->UpdateUser = "Rubel";
+        //station End
+        
+        
+        //address start
+        $address = new Address();
+        $address->AddressId = Str::uuid();
+        $address->PatientId = $PatientId;
+        $address->AddressLine1 = $request->addressInfo['AddressLine1'];
+        $address->AddressLine2 = $request->addressInfo['AddressLine2'];
+        $address->Village = $request->addressInfo['Village'];
+        $address->Thana = $request->addressInfo['Thana'];
+        $address->PostCode = $request->addressInfo['PostCode'];
+        $address->District = $request->addressInfo['District'];
+        $address->Country = $request->addressInfo['Country'];
+        $address->AddressLine1Parmanent = $request->addressInfo['AddressLine1Parmanent'];
+        $address->AddressLine2Parmanent = $request->addressInfo['AddressLine2Parmanent'];
+        $address->VillageParmanent = $request->addressInfo['VillageParmanent'];
+        $address->ThanaParmanent = $request->addressInfo['ThanaParmanent'];
+        $address->PostCodeParmanent = $request->addressInfo['PostCodeParmanent'];
+        $address->DistrictParmanent = $request->addressInfo['DistrictParmanent'];
+        $address->CountryParmanent = $request->addressInfo['CountryParmanent'];
+        $address->Status = $request->addressInfo['Status'];
+        $address->Camp = $request->addressInfo['Camp'];
+        $address->BlockNumber = $request->addressInfo['BlockNumber'];
+        $address->Majhi = $request->addressInfo['Majhi'];
+        $address->TentNumber = $request->addressInfo['TentNumber'];
+        $address->FCN = $request->addressInfo['FCN'];
+        $address->Status = 1;
+        $address->OrgId = $OrgId;
+        $address->CreateDate = $date;
+        $address->CreateUser = "Azad";
+        $address->UpdateDate = $date;
+        $address->UpdateUser = "Rubel";
+        $address->save();
+        //address start
+
+
+
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
 
         return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
     }
