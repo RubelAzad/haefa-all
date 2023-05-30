@@ -30,6 +30,20 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::get('district', 'PatientController@district');//district get
     Route::get('self-type', 'PatientController@SelfType'); //self type get
     Route::get('patient-reg-create', 'PatientController@patientRegCreate'); //patient get
+
+    //patient search
+    Route::post('patient-search1', 'SearchPatientController@searchPatient1');
+    Route::get('patient-search', 'SearchPatientController@searchPatient');
+
+    //station 1
+    Route::get('patient-blood-group', 'Station1Controller@Blood');
+    Route::post('patient-height-width-create', 'Station1Controller@patientHeightWidthCreate');
+
+    //station 2
+    Route::post('patient-blood-pressure-create', 'Station2Controller@patientMDataBPCreate');
+
+    //station 3
+    Route::post('patient-glucose-hemoglobin-create', 'Station3Controller@patientGlucoseHbCreate');
 });
 
 Route::group(['middleware' => 'auth'], function ($router) {
