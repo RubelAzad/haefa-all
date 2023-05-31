@@ -4,23 +4,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use App\Models\MDataBP;
+use DB;
+use Carbon\Carbon;
+use App\Models\Station;
 
 class Station2Controller extends Controller
 {
-    public function patientMDataBPCreate(){
-
+    public function patientMDataBPCreate(Request $request){
         $PatientId=$request->PatientId;
         $OrgId=$request->OrgId;
-        $usersID=$request->usersID;
+        
         try{
-        DB::beginTransaction();
+        
 
         $currentTime = Carbon::now();
         $date=$currentTime->toDateTimeString();
 
         //patient start
         $MDataBP = new MDataBP();
-        $MDataBP->Id = Str::uuid();
         $MDataBP->PatientId = $PatientId;
         $MDataBP->CollectionDate = $date;
         $MDataBP->HeartRate = $request->HeartRate;
@@ -42,8 +43,6 @@ class Station2Controller extends Controller
         //patient End
 
         //patient Registration id wise patient id
-        $patientInfo=Patient::where('PatientId','=',$PatientId)->first();
-        $PatientId=$patientInfo->PatientId;
 
         //station start
 
@@ -52,11 +51,9 @@ class Station2Controller extends Controller
         //station End
         
         
-        return response()->json(['status' => true, 'code'=>200, 'message'=>'Data Save successfully'], 200);
-        DB::commit();
+        return response()->json(['status' => true, 'code'=>200, 'message'=>'Station 2 Save successfully'], 200);
 
         }catch (Exception $e) {
-            DB::rollBack();
             throw new Exception($e->getMessage());
         }  
 

@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use App\Models\MDataGlucoseHb;
+use DB;
+use Carbon\Carbon;
+use App\Models\Station;
 
 class Station3Controller extends Controller
 {
-    public function patientGlucoseHbCreate(){
+    public function patientGlucoseHbCreate(Request $request){
 
         $PatientId=$request->PatientId;
         $OrgId=$request->OrgId;
-        $usersID=$request->usersID;
         try{
-        DB::beginTransaction();
 
         $currentTime = Carbon::now();
         $date=$currentTime->toDateTimeString();
 
         //patient start
         $MDataGlucoseHb = new MDataGlucoseHb();
-        $MDataGlucoseHb->Id = Str::uuid();
         $MDataGlucoseHb->PatientId = $PatientId;
         $MDataGlucoseHb->CollectionDate = $date;
         $MDataGlucoseHb->RBG = $request->RBG;
@@ -36,22 +36,16 @@ class Station3Controller extends Controller
         $MDataGlucoseHb->save();
         //patient End
 
-        //patient Registration id wise patient id
-        $patientInfo=Patient::where('PatientId','=',$PatientId)->first();
-        $PatientId=$patientInfo->PatientId;
-
         //station start
 
-        Station::where('PatientId','=' ,$PatientId)->update(['StationStatus' => '3']);
+        Station::where('PatientId','=' ,$PatientId)->update(['StationStatus' => '4']);
         
         //station End
         
         
-        return response()->json(['status' => true, 'code'=>200, 'message'=>'Data Save successfully'], 200);
-        DB::commit();
+        return response()->json(['status' => true, 'code'=>200, 'message'=>'Station 3 Save successfully'], 200);
 
         }catch (Exception $e) {
-            DB::rollBack();
             throw new Exception($e->getMessage());
         }  
 

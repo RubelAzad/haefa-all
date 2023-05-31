@@ -102,18 +102,15 @@ class PatientController extends Controller
 
     public function patientRegCreate(Request $request){
 
-        $registrationNo=$request->patientInfo['registrationNo'];
-        $OrgId=$request->patientInfo['OrgId'];
+        $registrationNo=$request->patientInfo['RegistrationId'];
         $usersID=$request->patientInfo['usersID'];
+        $OrgId=$request->patientInfo['OrgId'];
         try{
-        DB::beginTransaction();
 
         $currentTime = Carbon::now();
         $date=$currentTime->toDateTimeString();
 
-        //patient start
         $patient = new Patient();
-        $patient->PatientId = Str::uuid();
         $patient->PatientCode = $registrationNo;
         $patient->RegistrationId = $registrationNo;
         $patient->GivenName = $request->patientInfo['fName'];
@@ -121,16 +118,16 @@ class PatientController extends Controller
         $patient->Age = $request->patientInfo['patientAge'];
         $patient->BirthDate = $request->patientInfo['DOB'];
         $patient->CellNumber = $request->patientInfo['contactNumber'];
-        $patient->GenderId = $request->patientInfo['gender'];
+        $patient->GenderId = $request->patientInfo['GenderId'];
         $patient->IdType = $request->patientInfo['idType'];
         $patient->IdNumber = $request->patientInfo['ID'];
         $patient->MaritalStatusId = $request->patientInfo['MariatalStatus'];
         $patient->PatientImage = $request->patientInfo['PatientPhoto'];
-        $patient->IdOwner = $request->patientInfo['SelfType'];
-        $patient->WorkPlaceId =$request->patientInfo['WorkPlace'];
-        $patient->WorkPlaceBranchId = $request->patientInfo['WorkBranch'];
-        $patient->BarCode = $request->patientInfo['BarCode'];
-        $patient->FingerPrint = $request->patientInfo['FingerPrint'];
+        $patient->IdOwner = $request->patientInfo['selfType'];
+        $patient->WorkPlaceId = (string) $request->patientInfo['WorkPlaceId'];
+        $patient->WorkPlaceBranchId = (string) $request->patientInfo['WorkPlaceBranchId'];
+        $patient->BarCode = (string) $request->patientInfo['BarCodeId'];
+        $patient->FingerPrint = (string) $request->patientInfo['FIngerPrintId'];
         $patient->OrgId = $OrgId;
         $patient->usersID = $usersID;
         $patient->Status = 1;
@@ -139,27 +136,26 @@ class PatientController extends Controller
         $patient->UpdateDate = $date;
         $patient->UpdateUser = "Rubel";
         $patient->save();
-        //patient End
 
         //patient Registration id wise patient id
+
         $patientId=Patient::where('RegistrationId','=',$registrationNo)->first();
         $PatientId=$patientId->PatientId;
 
-        //station start
+        // //station start
         $station = new Station();
-        $station->StationId = Str::uuid();
         $station->PatientId = $PatientId;
-        $station->StationStatus = $request->stationInfo['StationStatus'];
+        $station->StationStatus = 1;
         $station->CreateDate = $date;
         $station->CreateUser = "Azad";
         $station->UpdateDate = $date;
         $station->UpdateUser = "Rubel";
-        //station End
+        $station->save();
+        // //station End
         
         
-        //address start
+        // //address start
         $address = new Address();
-        $address->AddressId = Str::uuid();
         $address->PatientId = $PatientId;
         $address->AddressLine1 = $request->addressInfo['AddressLine1'];
         $address->AddressLine2 = $request->addressInfo['AddressLine2'];
@@ -175,7 +171,6 @@ class PatientController extends Controller
         $address->PostCodeParmanent = $request->addressInfo['PostCodeParmanent'];
         $address->DistrictParmanent = $request->addressInfo['DistrictParmanent'];
         $address->CountryParmanent = $request->addressInfo['CountryParmanent'];
-        $address->Status = $request->addressInfo['Status'];
         $address->Camp = $request->addressInfo['Camp'];
         $address->BlockNumber = $request->addressInfo['BlockNumber'];
         $address->Majhi = $request->addressInfo['Majhi'];
@@ -190,13 +185,17 @@ class PatientController extends Controller
         $address->save();
         //address start
 
-
+        return response()->json([
+            'message' => 'Patient Registration Sava Successfully',
+            'code'=>200
+        ],200);
 
         }catch (Exception $e) {
             throw new Exception($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
         }  
 
-        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient Registration data');
     }
 
 
