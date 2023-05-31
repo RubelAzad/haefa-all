@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use App\Models\RefBloodGroup;
 use App\Models\MDataHeightWeight;
+use DB;
+use Carbon\Carbon;
+use App\Models\Station;
 
 class Station1Controller extends Controller
 {
@@ -36,20 +39,18 @@ class Station1Controller extends Controller
         return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava data');
     }
 
-    public function patientHeightWidthCreate(){
+    public function patientHeightWidthCreate(Request $request){
 
         $PatientId=$request->PatientId;
         $OrgId=$request->OrgId;
         $usersID=$request->usersID;
         try{
-        DB::beginTransaction();
 
         $currentTime = Carbon::now();
         $date=$currentTime->toDateTimeString();
 
         //patient start
         $heightWeight = new MDataHeightWeight();
-        $heightWeight->Id = Str::uuid();
         $heightWeight->PatientId = $PatientId;
         $heightWeight->CollectionDate = $date;
         $heightWeight->Height = $request->Height;
@@ -61,16 +62,15 @@ class Station1Controller extends Controller
         $heightWeight->RefBloodGroupId = $request->RefBloodGroupId;
         $heightWeight->Status = 1;
         $heightWeight->CreateDate = $date;
-        $heightWeight->CreateUser = "Azad";
+        $heightWeight->CreateUser = $request->CreateUser;
         $heightWeight->UpdateDate = $date;
-        $heightWeight->UpdateUser = "Rubel";
+        $heightWeight->UpdateUser = "";
         $heightWeight->OrgId = $OrgId;
         $heightWeight->save();
         //patient End
 
         //patient Registration id wise patient id
-        $patientInfo=Patient::where('PatientId','=',$PatientId)->first();
-        $PatientId=$patientInfo->PatientId;
+      
 
         //station start
 
@@ -78,12 +78,10 @@ class Station1Controller extends Controller
         
         //station End
         
+        return response()->json(['status' => true, 'code'=>200, 'message'=>'Station 1 Save successfully'], 200);
         
-        return response()->json(['status' => true, 'code'=>200, 'message'=>'Data Save successfully'], 200);
-        DB::commit();
 
         }catch (Exception $e) {
-            DB::rollBack();
             throw new Exception($e->getMessage());
         }  
 
