@@ -107,6 +107,9 @@ Route::group(['middleware' => 'auth'], function ($router) {
    Route::get('patient-s4b-mens-contraception','Station4BController@patientS4bMensContraception');
    Route::get('patient-s4b-during-menstruation','Station4BController@patientS4bDuringMenstruation');
    Route::get('patient-s4b-how-often','Station4BController@patientS4bHowOften');
+
+   Route::post('patient-s4b-create','Station4BController@patientS4bCreate');
+
 //Station 4B route end
 
 //Station 4C route start
