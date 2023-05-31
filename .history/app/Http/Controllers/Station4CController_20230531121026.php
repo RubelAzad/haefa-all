@@ -6,11 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\RefProvisionalDiagnosis;
 use App\Models\RefLabInvestigation;
-use App\Models\RefFrequency;
-use App\Models\RefReferral;
-use App\Models\HealthCenter;
 use App\Models\RefDrug;
-use App\Models\RefAdvice;
 
 class Station4CController extends Controller
 {
@@ -134,7 +130,7 @@ class Station4CController extends Controller
     // Advice
     public function Advice(){
         try{
-            $RefAdvice = RefAdvice::select('AdviceId','AdviceCode','AdviceInEnglish')->get();
+            $RefAdvice = RefAdvice::select('RId','RCode','Description')->get();
             $status = [
                 'code'=>200,
                 'message'=>'Advice data get successfully!'

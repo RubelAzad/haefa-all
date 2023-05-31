@@ -30,18 +30,15 @@ class Station4AController extends Controller
            return response()->json(['data'=>$data,'status'=>$status]);
         }
         catch(\Exception $e){
-            $status = [
-                'code'=> 403,
-                'message' =>$e->getMessage()
-               ];
-            return response()->json(['status' => $status]);
+            return response()->json(['status' => false,'message'=>$e->getMessage()],403);
         }
     }
     
-    public function complaintsList(){
+    public function complaintsList(Request $request){
         try{
             //RefChiefComplain 
-           $data = RefChiefComplain::select('CCId','CCCode','Description')->get();
+           $data = RefChiefComplain::where('CCCode', 'like', '%' . $request->searchKey . '%')
+           ->select('CCId','CCCode')->get();
 
            $status = [
             'code'=> 200,
@@ -50,11 +47,7 @@ class Station4AController extends Controller
            return response()->json(['data'=>$data,'status'=>$status]);
         }
         catch(\Exception $e){
-            $status = [
-                'code'=> 403,
-                'message' =>$e->getMessage()
-               ];
-            return response()->json(['status' => $status]);
+            return response()->json(['status' => false, 'message'=>$e->getMessage()], 403);
         }
     }
     
@@ -358,7 +351,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
 
@@ -376,7 +369,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
 
@@ -393,7 +386,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
     
@@ -411,7 +404,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
     
@@ -430,7 +423,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
     
@@ -448,7 +441,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
     
@@ -467,7 +460,7 @@ class Station4AController extends Controller
                 'code'=> 403,
                 'message' =>$e->getMessage()
                ];
-            return response()->json(['status' => $status]);
+            return response()->json($status);
         }
     }
 

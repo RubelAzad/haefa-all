@@ -72,11 +72,7 @@ class Station4BController extends Controller
             return response()->json(['data'=>$data,'status'=>$status]);
 
         }catch(\Exception $e){
-            $status = [
-                'code'=> 403,
-                'message' =>$e->getMessage()
-               ];
-            return response()->json(['status' => $status]);
+            return response()->json(['code'=>403,'status'=>false,'message'=> $e->getMessage()]);
         }
     }
     
@@ -91,11 +87,7 @@ class Station4BController extends Controller
             return response()->json(['data'=>$data,'status'=>$status]);
 
         }catch(\Exception $e){
-            $status = [
-                'code'=> 403,
-                'message' =>$e->getMessage()
-               ];
-            return response()->json(['status' => $status]);
+            return response()->json(['code'=>403,'status'=>false,'message'=> $e->getMessage()]);
         }
     }
     
@@ -110,11 +102,7 @@ class Station4BController extends Controller
             return response()->json(['data'=>$data,'status'=>$status]);
 
         }catch(\Exception $e){
-            $status = [
-                'code'=> 403,
-                'message' =>$e->getMessage()
-               ];
-            return response()->json(['status' => $status]);
+            return response()->json(['code'=>403,'status'=>false,'message'=> $e->getMessage()]);
         }
     }
 }

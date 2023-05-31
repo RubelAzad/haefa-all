@@ -113,11 +113,10 @@ Route::group(['middleware' => 'auth'], function ($router) {
 //Station 4B route end
 
 //Station 4C route start
-   Route::get('provisional-diagonisis','Station4CController@provisionalDiagonisis'); //get provisional diagnosis
-   Route::get('investigations','Station4CController@investigations'); //get investigations
-   Route::get('treatment-suggestins','Station4CController@treatmentSuggestins'); //get investigations
-   Route::get('frequency-hours','Station4CController@frequencyHours'); //get frequency hours
-   Route::get('referral-section','Station4CController@referralSection'); //get referral section
-   Route::get('health-center','Station4CController@healthCenter'); //get health center
-   Route::get('advice-data','Station4CController@Advice'); //get Advice
+   Route::get('provisional-diagonisis','Station4BController@provisionalDiagonisis'); //get provisional diagnosis
+   Route::get('investigations','Station4BController@investigations'); //get investigations
+   Route::get('treatment-suggestins','Station4BController@treatmentSuggestins'); //get investigations
+   Route::get('frequency-hours','Station4BController@frequencyHours'); //get frequency hours
+   Route::get('referral-section','Station4BController@referralSection'); //get referral section
+   Route::get('health-center','Station4BController@healthCenter'); //get referral section
 //Station 4C route end 

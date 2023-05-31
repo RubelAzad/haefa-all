@@ -38,10 +38,11 @@ class Station4AController extends Controller
         }
     }
     
-    public function complaintsList(){
+    public function complaintsList(Request $request){
         try{
             //RefChiefComplain 
-           $data = RefChiefComplain::select('CCId','CCCode','Description')->get();
+           $data = RefChiefComplain::where('CCCode', 'like', '%' . $request->searchKey . '%')
+           ->select('CCId','CCCode')->get();
 
            $status = [
             'code'=> 200,

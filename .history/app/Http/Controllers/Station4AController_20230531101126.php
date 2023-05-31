@@ -41,7 +41,7 @@ class Station4AController extends Controller
     public function complaintsList(){
         try{
             //RefChiefComplain 
-           $data = RefChiefComplain::select('CCId','CCCode','Description')->get();
+           $data = RefChiefComplain::select('CCId','CCCode','')->get();
 
            $status = [
             'code'=> 200,

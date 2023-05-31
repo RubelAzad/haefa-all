@@ -327,7 +327,7 @@ class Station4AController extends Controller
     
     public function presentIllness(){
         try{
-           $data = RefIllness::select('IllnessId','IllnessCode')->get();
+           return $data = RefIllness::get();
            $status = [
             'code'=> 200,
             'message' =>'Present illness get successfully'

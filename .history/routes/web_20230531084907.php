@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
 //Station 4A route start
     //Chief Complaints 
     Route::get('complaints-list-day','Station4AController@complaintsListDay'); //Complain days get
-    Route::get('complaints-list','Station4AController@complaintsList'); //Matched complaints by cc code
+    Route::post('complaints-list','Station4AController@complaintsList'); //Matched complaints by cc code
     Route::post('patient-s4-create','Station4AController@patientS4Create'); //Save chief complain
     
     //Patient H/O Present Illness  
@@ -104,8 +104,8 @@ Route::group(['middleware' => 'auth'], function ($router) {
 
 //Station 4B route start
    //Menstrual History
-   Route::get('patient-s4b-mens-contraception','Station4BController@patientS4bMensContraception'); //get contraception method
-   Route::get('patient-s4b-during-menstruation','Station4BController@patientS4bDuringMenstruation'); // get What product you use During the menstruation
+   Route::get('patient-s4b-mens-contraception','Station4BController@patientS4bMensContraception');
+   Route::get('patient-s4b-during-menstruation','Station4BController@patientS4bDuringMenstruation');
    Route::get('patient-s4b-how-often','Station4BController@patientS4bHowOften');
 
    Route::post('patient-s4b-create','Station4BController@patientS4bCreate');
@@ -113,11 +113,5 @@ Route::group(['middleware' => 'auth'], function ($router) {
 //Station 4B route end
 
 //Station 4C route start
-   Route::get('provisional-diagonisis','Station4CController@provisionalDiagonisis'); //get provisional diagnosis
-   Route::get('investigations','Station4CController@investigations'); //get investigations
-   Route::get('treatment-suggestins','Station4CController@treatmentSuggestins'); //get investigations
-   Route::get('frequency-hours','Station4CController@frequencyHours'); //get frequency hours
-   Route::get('referral-section','Station4CController@referralSection'); //get referral section
-   Route::get('health-center','Station4CController@healthCenter'); //get health center
-   Route::get('advice-data','Station4CController@Advice'); //get Advice
+Route::post('provisional-diagonisis','Station4BController@patientS4bCreate');
 //Station 4C route end 

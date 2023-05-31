@@ -134,7 +134,7 @@ class Station4CController extends Controller
     // Advice
     public function Advice(){
         try{
-            $RefAdvice = RefAdvice::select('AdviceId','AdviceCode','AdviceInEnglish')->get();
+            $RefAdvice = RefAdvice::select('RId','RCode','Description')->get();
             $status = [
                 'code'=>200,
                 'message'=>'Advice data get successfully!'

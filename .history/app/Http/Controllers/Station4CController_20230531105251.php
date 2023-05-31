@@ -4,14 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\RefProvisionalDiagnosis;
-use App\Models\RefLabInvestigation;
-use App\Models\RefFrequency;
-use App\Models\RefReferral;
-use App\Models\HealthCenter;
-use App\Models\RefDrug;
-use App\Models\RefAdvice;
-
 class Station4CController extends Controller
 {
     public function provisionalDiagonisis(){
@@ -24,7 +16,7 @@ class Station4CController extends Controller
                 'code'=> 200,
                 'message' =>'Provisional Diagnosis data get successfully'
                ];
-            return response()->json(['status'=>$status,'data'=>$provisionalDiagonisis]);  
+            return response()->json(['status'=>$status,'data'=>$data]);  
 
         }catch(\Exception $e){
             $status = [
@@ -115,12 +107,12 @@ class Station4CController extends Controller
     // Health Center
     public function healthCenter(){
         try{
-            $HealthCenter = HealthCenter::select('HealthCenterId','HealthCenterCode','HealthCenterName')->get();
+            $RefReferral = RefReferral::select('RId','RCode','Description')->get();
             $status = [
                 'code'=>200,
-                'message'=>'Health center data get successfully!'
+                'message'=>'Referral section data get successfully!'
             ];
-            return response()->json(['status'=>$status,'data'=>$HealthCenter]);
+            return response()->json(['status'=>$status,'data'=>$RefReferral]);
 
         }catch(\Exception $e){
             $status = [
@@ -134,10 +126,10 @@ class Station4CController extends Controller
     // Advice
     public function Advice(){
         try{
-            $RefAdvice = RefAdvice::select('AdviceId','AdviceCode','AdviceInEnglish')->get();
+            $RefAdvice = RefAdvice::select('RId','RCode','Description')->get();
             $status = [
                 'code'=>200,
-                'message'=>'Advice data get successfully!'
+                'message'=>'Referral section data get successfully!'
             ];
             return response()->json(['status'=>$status,'data'=>$RefAdvice]);
 

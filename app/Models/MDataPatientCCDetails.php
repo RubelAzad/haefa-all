@@ -11,5 +11,5 @@ class MDataPatientCCDetails extends Model
     protected $fillable = [
         'MDCCId','PatientId','CollectionDate','CCId','ChiefComplain','DurationId','CCDurationValue','OtherCC',
         'Nature','Status','CreateDate','CreateUser','UpdateDate','UpdateUser','OrgId'
-    ]
+    ];
 }
