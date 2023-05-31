@@ -19,7 +19,6 @@ use App\Models\RefSocialBehavior;
 use App\Models\MDataPhysicalExamGeneral;
 use App\Models\MDataPhysicalFinding;
 use App\Models\MDataPatientQuestionAnswer;
-use App\Models\MDataPatientVaccine;
 use App\Models\MDataRxDetails;
 use App\Models\RefDuration;
 use Carbon\Carbon;
@@ -291,6 +290,9 @@ class Station4AController extends Controller
                 $PatientVaccine->OrgId = $ChildVaccination[$i]['OrgId'];
                 $PatientVaccine->save();
             }
+
+            DB::commit();
+            return response()->json(['message'=>'success','data' =>$PatientVaccine]);
             
             //Save Adult Vaccination
             $AdultVaccination = $request->AdultVaccination;
@@ -312,7 +314,7 @@ class Station4AController extends Controller
             }
 
            // Commit [save] the transaction
-            DB::commit(); 
+            // DB::commit(); 
 
             $status = [
                 'code'=> 200,

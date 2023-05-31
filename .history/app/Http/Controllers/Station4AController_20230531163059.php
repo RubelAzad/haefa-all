@@ -19,7 +19,6 @@ use App\Models\RefSocialBehavior;
 use App\Models\MDataPhysicalExamGeneral;
 use App\Models\MDataPhysicalFinding;
 use App\Models\MDataPatientQuestionAnswer;
-use App\Models\MDataPatientVaccine;
 use App\Models\MDataRxDetails;
 use App\Models\RefDuration;
 use Carbon\Carbon;
@@ -258,7 +257,7 @@ class Station4AController extends Controller
             $MentalHealth = $request->PatientMentalHealth;
             for($i=0;$i<count($MentalHealth); $i++){
                 $PatientQuestionAnswer = new MDataPatientQuestionAnswer();
-                $PatientQuestionAnswer->MDPatientQuestionAnswerId = Str::uuid();
+                $PatientQuestionAnswer->RxId = Str::uuid();
                 $PatientQuestionAnswer->PatientId = $MentalHealth[$i]['PatientId'];
                 $PatientQuestionAnswer->CollectionDate = $DateTime;
                 $PatientQuestionAnswer->QuestionId = $MentalHealth[$i]['QuestionId'];
@@ -272,6 +271,9 @@ class Station4AController extends Controller
                 $PatientQuestionAnswer->OrgId = $MentalHealth[$i]['OrgId'];
                 $PatientQuestionAnswer->save();
             }
+
+            DB::commit();
+            return response()->json(['message'=>'success','data' =>$PatientQuestionAnswer]);
             
             //Save Child Vaccination 
             $ChildVaccination = $request->ChildVaccination;
@@ -312,7 +314,7 @@ class Station4AController extends Controller
             }
 
            // Commit [save] the transaction
-            DB::commit(); 
+            // DB::commit(); 
 
             $status = [
                 'code'=> 200,

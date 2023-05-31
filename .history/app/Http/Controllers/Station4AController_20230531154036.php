@@ -11,18 +11,12 @@ use App\Models\RefQuestion;
 use App\Models\RefFrequency;
 use App\Models\RefDiseaseGroup;
 use App\Models\MDataSocialBehavior;
-use App\Models\MDataVariousSymptom;
+use App\Models\RefDuration;
+use Carbon\Carbon;
+use App\Models\RefSocialBehavior;
 use App\Models\MDataPatientCCDetails;
 use App\Models\MDataPatientIllnessHistory;
 use Illuminate\Support\Facades\DB;
-use App\Models\RefSocialBehavior;
-use App\Models\MDataPhysicalExamGeneral;
-use App\Models\MDataPhysicalFinding;
-use App\Models\MDataPatientQuestionAnswer;
-use App\Models\MDataPatientVaccine;
-use App\Models\MDataRxDetails;
-use App\Models\RefDuration;
-use Carbon\Carbon;
 
 class Station4AController extends Controller
 {
@@ -167,6 +161,9 @@ class Station4AController extends Controller
                 $SocialBehavior->OrgId = $SocialHistory[$i]['OrgId'];
                 $SocialBehavior->save();
             }
+            
+            DB::commit();
+            return response()->json(['message'=>'success','data' =>$SocialBehavior]);
 
             //Save TB Screening
             $TBScreening = $request->TBScreening;
@@ -217,7 +214,7 @@ class Station4AController extends Controller
                 $ExamGeneral->OrgId = $GeneralExamination[$i]['OrgId'];
                 $ExamGeneral->save();
             }
-
+            
             //Save Systemic Examination
             $SystemicExam = $request->SystemicExamination;
             for($i=0;$i<count($SystemicExam); $i++){
@@ -234,7 +231,7 @@ class Station4AController extends Controller
                 $SystemicExamination->OrgId = $SystemicExam[$i]['OrgId'];
                 $SystemicExamination->save();
             }
-
+            
             //Save Current Medication Taken
             $MedicationTaken = $request->CurrentMedicationTaken;
             for($i=0;$i<count($MedicationTaken); $i++){
@@ -258,12 +255,12 @@ class Station4AController extends Controller
             $MentalHealth = $request->PatientMentalHealth;
             for($i=0;$i<count($MentalHealth); $i++){
                 $PatientQuestionAnswer = new MDataPatientQuestionAnswer();
-                $PatientQuestionAnswer->MDPatientQuestionAnswerId = Str::uuid();
+                $PatientQuestionAnswer->RxId = Str::uuid();
                 $PatientQuestionAnswer->PatientId = $MentalHealth[$i]['PatientId'];
                 $PatientQuestionAnswer->CollectionDate = $DateTime;
-                $PatientQuestionAnswer->QuestionId = $MentalHealth[$i]['QuestionId'];
-                $PatientQuestionAnswer->AnswerId = $MentalHealth[$i]['AnswerId'];
-                $PatientQuestionAnswer->Comment = $MentalHealth[$i]['Comment'];
+                $PatientQuestionAnswer->Rx = $MentalHealth[$i]['Rx'];
+                $PatientQuestionAnswer->DurationId = $MentalHealth[$i]['DurationId'];
+                $PatientQuestionAnswer->RxDurationValue = $MentalHealth[$i]['RxDurationValue'];
                 $PatientQuestionAnswer->Status = $MentalHealth[$i]['Status'];
                 $PatientQuestionAnswer->CreateUser = $MentalHealth[$i]['CreateUser'];
                 $PatientQuestionAnswer->CreateDate = $DateTime;
@@ -312,7 +309,7 @@ class Station4AController extends Controller
             }
 
            // Commit [save] the transaction
-            DB::commit(); 
+            // DB::commit(); 
 
             $status = [
                 'code'=> 200,

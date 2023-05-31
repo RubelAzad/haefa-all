@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\RefSocialBehavior;
 use App\Models\MDataPhysicalExamGeneral;
 use App\Models\MDataPhysicalFinding;
-use App\Models\MDataPatientQuestionAnswer;
-use App\Models\MDataPatientVaccine;
 use App\Models\MDataRxDetails;
 use App\Models\RefDuration;
 use Carbon\Carbon;
@@ -253,17 +251,20 @@ class Station4AController extends Controller
                 $MDataRxDetail->OrgId = $MedicationTaken[$i]['OrgId'];
                 $MDataRxDetail->save();
             }
+
+            DB::commit();
+            return response()->json(['message'=>'success','data' =>$MDataRxDetail]);
             
             //Save Patient Mental Health
             $MentalHealth = $request->PatientMentalHealth;
             for($i=0;$i<count($MentalHealth); $i++){
                 $PatientQuestionAnswer = new MDataPatientQuestionAnswer();
-                $PatientQuestionAnswer->MDPatientQuestionAnswerId = Str::uuid();
+                $PatientQuestionAnswer->RxId = Str::uuid();
                 $PatientQuestionAnswer->PatientId = $MentalHealth[$i]['PatientId'];
                 $PatientQuestionAnswer->CollectionDate = $DateTime;
-                $PatientQuestionAnswer->QuestionId = $MentalHealth[$i]['QuestionId'];
-                $PatientQuestionAnswer->AnswerId = $MentalHealth[$i]['AnswerId'];
-                $PatientQuestionAnswer->Comment = $MentalHealth[$i]['Comment'];
+                $PatientQuestionAnswer->Rx = $MentalHealth[$i]['Rx'];
+                $PatientQuestionAnswer->DurationId = $MentalHealth[$i]['DurationId'];
+                $PatientQuestionAnswer->RxDurationValue = $MentalHealth[$i]['RxDurationValue'];
                 $PatientQuestionAnswer->Status = $MentalHealth[$i]['Status'];
                 $PatientQuestionAnswer->CreateUser = $MentalHealth[$i]['CreateUser'];
                 $PatientQuestionAnswer->CreateDate = $DateTime;
@@ -312,7 +313,7 @@ class Station4AController extends Controller
             }
 
            // Commit [save] the transaction
-            DB::commit(); 
+            // DB::commit(); 
 
             $status = [
                 'code'=> 200,

@@ -291,6 +291,9 @@ class Station4AController extends Controller
                 $PatientVaccine->OrgId = $ChildVaccination[$i]['OrgId'];
                 $PatientVaccine->save();
             }
+
+            DB::commit();
+            return response()->json(['message'=>'success','data' =>$PatientVaccine]);
             
             //Save Adult Vaccination
             $AdultVaccination = $request->AdultVaccination;
@@ -312,7 +315,7 @@ class Station4AController extends Controller
             }
 
            // Commit [save] the transaction
-            DB::commit(); 
+            // DB::commit(); 
 
             $status = [
                 'code'=> 200,
