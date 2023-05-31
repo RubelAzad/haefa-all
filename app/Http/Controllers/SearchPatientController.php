@@ -26,7 +26,7 @@ class SearchPatientController extends Controller
     public function searchPatient1(Request $request){
         
         if($request->Card){
-            $patientDetails=Patient::where('RegistrationId','=',$request->Card)->get();
+            $patientDetails=Patient::with('Gender','MartitalStatus')->where('RegistrationId','=',$request->Card)->get();
             return $patientDetails;
         }
         if($request->NID){
