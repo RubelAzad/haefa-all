@@ -7,6 +7,10 @@ use Illuminate\Support\Str;
 use App\Models\RefContraceptionMethod;
 use App\Models\RefMenstruationProduct;
 use App\Models\RefMnstProductUsageTime;
+use App\Models\MDataPatientObsGynae;
+use App\Models\MDataPatientPregnancy;
+use App\Models\MDataPatientCervicalCancer;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 
@@ -14,9 +18,9 @@ class Station4BController extends Controller
 {
     
     public function patientS4bCreate(Request $request){
-        try{
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try{
             $CurrentTime = Carbon::now();
             $DateTime = $CurrentTime->toDateTimeString();
             //Obstetrics Information 
@@ -24,31 +28,84 @@ class Station4BController extends Controller
             $PatientObsGynae->MDPatientObsGynaeId = Str::uuid();
             $PatientObsGynae->PatientId = $request->PatientId;
             $PatientObsGynae->CollectionDate = $DateTime;
+            $PatientObsGynae->Gravida = $request->Gravida;
+            $PatientObsGynae->Para = $request->Para;
+            $PatientObsGynae->StillBirth = $request->StillBirth;
+            $PatientObsGynae->MiscarraigeOrAbortion = $request->MiscarraigeOrAbortion;
+            $PatientObsGynae->MR = $request->MR;
+            $PatientObsGynae->LivingMale = $request->LivingMale;
+            $PatientObsGynae->LivingFemale = $request->LivingFemale;
 
-            // $PatientObsGynae->Gravida = ;
-            // $PatientObsGynae->StillBirth = ;
-            // $PatientObsGynae->MiscarraigeOrAbortion = ;
-            // $PatientObsGynae->MR = ;
-            // $PatientObsGynae->LivingBirth = ;
-            // $PatientObsGynae->LivingMale = ;
-            // $PatientObsGynae->LivingFemale = ;
-            // $PatientObsGynae->ChildMortality0To1 = ;
-            // $PatientObsGynae->ChildMortalityBelow5 = ;
-            // $PatientObsGynae->ChildMortalityOver5 = ;
-            // $PatientObsGynae->LMP = ;
-            // $PatientObsGynae->ContraceptionMethodId = ;
-            // $PatientObsGynae->OtherContraceptionMethod = ;
-            // $PatientObsGynae->Comment = ;
-            // $PatientObsGynae->MenstruationProductId = ;
-            // $PatientObsGynae->save();
+            if($request->male==1){
+                $PatientObsGynae->ChildMortality0To1 = "M";
+            }
+            elseif($request->male==2){
+                $PatientObsGynae->ChildMortalityBelow5 = "M";
+            }
+            elseif($request->male==3){
+                $PatientObsGynae->ChildMortalityOver5 = "M";
+            }
+            if($request->female==1){
+                $PatientObsGynae->ChildMortality0To1 = "F";
+            } 
+            elseif($request->female==2){
+                $PatientObsGynae->ChildMortalityBelow5 = "F";
+            }
+            elseif($request->male==3){
+                $PatientObsGynae->ChildMortalityOver5 = "F";
+            }
+            $PatientObsGynae->IsPregnant = $request->IsPregnant;
+            $PatientObsGynae->LMP = $request->LMP;
+            $PatientObsGynae->ContraceptionMethodId = $request->ContraceptionMethodId;
+            $PatientObsGynae->Comment = $request->Comment;
+            $PatientObsGynae->MenstruationProductId = $request->MenstruationProductId;
+            $PatientObsGynae->MenstruationProductUsageTimeId = $request->MenstruationProductUsageTimeId;
+            $PatientObsGynae->Status = $request->Status;
+            $PatientObsGynae->CreateUser = $request->CreateUser;
+            $PatientObsGynae->CreateDate = $DateTime;
+            $PatientObsGynae->UpdateUser = $request->UpdateUser;
+            $PatientObsGynae->UpdateDate =  $DateTime;
+            $PatientObsGynae->OrgId = $request->OrgId;
+            $PatientObsGynae->save();
+
+            $MDataPatientPregnancy = new MDataPatientPregnancy();
+            $MDataPatientPregnancy->MDPatientPregnancyId = Str::uuid();
+            $MDataPatientPregnancy->PatientId = $request->PatientId;
+            $MDataPatientPregnancy->CollectionDate = $DateTime;
+            $MDataPatientPregnancy->LMP = $request->LMP;
+            $MDataPatientPregnancy->Status = $request->Status;
+            $MDataPatientPregnancy->CreateUser = $request->CreateUser;
+            $MDataPatientPregnancy->CreateDate = $DateTime;
+            $MDataPatientPregnancy->UpdateUser = $request->UpdateUser;
+            $MDataPatientPregnancy->UpdateDate =  $DateTime;
+            $MDataPatientPregnancy->OrgId = $request->OrgId;
+            $MDataPatientPregnancy->save();   
+
+            //Cervical cancer screening
+            $MDataPatientCervicalCancer = new MDataPatientCervicalCancer();
+            $MDataPatientCervicalCancer->MDataPatientCervicalCancerId = Str::uuid();
+            $MDataPatientCervicalCancer->PatientId = $request->PatientId;
+            $MDataPatientCervicalCancer->CollectionDate = $DateTime;
+            $MDataPatientCervicalCancer->CCScreeningDiagnosis = $request->CCScreeningDiagnosis;
+            $MDataPatientCervicalCancer->CCScreeningResultStatus = $request->CCScreeningResultStatus;
+            $MDataPatientCervicalCancer->ReferralBiopsyStatus = $request->ReferralBiopsyStatus;
+            $MDataPatientCervicalCancer->Status = $request->Status;
+            $MDataPatientCervicalCancer->CreateUser = $request->CreateUser;
+            $MDataPatientCervicalCancer->CreateDate = $DateTime;
+            $MDataPatientCervicalCancer->UpdateUser = $request->UpdateUser;
+            $MDataPatientCervicalCancer->UpdateDate =  $DateTime;
+            $MDataPatientCervicalCancer->OrgId = $request->OrgId;
+            $MDataPatientCervicalCancer->save();
 
             // Commit [save] the transaction
             DB::commit(); 
 
             $status = [
                 'code'=> 200,
-                'message' =>'Present illness get successfully'
+                'message' =>'Station 4B data saved successfully'
                ];
+
+            return response()->json(['status'=>$status, 'data'=>$MDataPatientCervicalCancer]); 
 
         }catch(\Exception $e){
 
@@ -59,6 +116,8 @@ class Station4BController extends Controller
                 'code' =>403,
                 'message' =>$e->getMessage()
             ];
+
+            return response()->json(['status'=>$status]);
         }
     }
     public function patientS4bMensContraception(){
