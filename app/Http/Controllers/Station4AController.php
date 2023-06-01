@@ -316,7 +316,7 @@ class Station4AController extends Controller
 
             $status = [
                 'code'=> 200,
-                'message' =>'Present illness get successfully'
+                'message' =>'Station 4A saved successfully!'
                ];
 
            return response()->json($status);
