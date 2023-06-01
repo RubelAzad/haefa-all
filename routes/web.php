@@ -32,7 +32,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::post('patient-reg-create', 'PatientController@patientRegCreate'); //patient post
 
     //patient search
-    Route::post('patient-search1', 'SearchPatientController@searchPatient1');
+    Route::post('search-patient-info', 'SearchPatientController@searchPatientAllInfo');
     Route::get('patient-search', 'SearchPatientController@searchPatient');
 
     //station 1
@@ -44,6 +44,18 @@ Route::group(['prefix' => 'api'], function ($router) {
 
     //station 3
     Route::post('patient-glucose-hemoglobin-create', 'Station3Controller@patientGlucoseHbCreate');
+
+    //station 4D start
+    Route::post('cra-non-lab-create','Station4DController@patientConRisk');
+
+    //station 4D End
+
+     //station 4E start
+     Route::post('cra-lab-create','Station4DController@patientConRisk');
+
+     //station 4E End
+
+    
 });
 
 Route::group(['middleware' => 'auth'], function ($router) {
@@ -121,3 +133,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
    Route::get('health-center','Station4CController@healthCenter'); //get health center
    Route::get('advice-data','Station4CController@Advice'); //get Advice
 //Station 4C route end 
+
+//station 4D Start
+
+//station 4D End
