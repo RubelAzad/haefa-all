@@ -10,7 +10,7 @@ class MDataPatientObsGynae extends Model
 
     protected $fillable = [
         'MDPatientObsGynaeId','PatientId','CollectionDate','Gravida','StillBirth','MiscarraigeOrAbortion',
-        'MR','LivingBirth','LivingMale','LivingFemale','ChildMortality0To1','ChildMortalityBelow5',
+        'Para','MR','LivingBirth','LivingMale','LivingFemale','ChildMortality0To1','ChildMortalityBelow5',
         'ChildMortalityOver5','LMP','ContraceptionMethodId','OtherContraceptionMethod','Comment',
         'MenstruationProductId','OtherMenstruationProduct','IsReuse','MenstruationProductUsageTimeId',
         'OtherMenstruationProductUsageTime','IsPregnant','Status','CreateUser','CreateDate',
