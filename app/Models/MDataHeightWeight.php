@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Patient;
 
 class MDataHeightWeight extends Model
 {
@@ -11,4 +12,9 @@ class MDataHeightWeight extends Model
         'Id','PatientId','CollectionDate','Height','Weight','BMI','BMIStatus','MUAC','MUACStatus','RefBloodGroupId','Status','CreateDate','CreateUser','UpdateDate','UpdateUser','OrgId'
     ];
     public $timestamps = false;
+
+    public function patient()
+    {
+      return $this->belongsTo(Patient::class, 'PatientId', 'PatientId');
+    }
 }
