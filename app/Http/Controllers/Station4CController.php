@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\MDataProvisionalDiagnosis;
+use App\Models\MDataTreatmentSuggestion;
+use App\Models\MDataInvestigation;
 use App\Models\RefProvisionalDiagnosis;
+use App\Models\MDataPatientReferral;
+use Illuminate\Support\Facades\DB;
 use App\Models\RefLabInvestigation;
+use App\Models\MDataFollowUpDate;
+use App\Models\MDataAdvice;
 use App\Models\RefFrequency;
+use App\Models\RefAdvice;
+use Illuminate\Support\Str;
 use App\Models\RefReferral;
 use App\Models\HealthCenter;
 use App\Models\RefDrug;
-use App\Models\RefAdvice;
+use Carbon\Carbon;
 
 class Station4CController extends Controller
 {
@@ -147,6 +155,156 @@ class Station4CController extends Controller
                 'message'=> $e->getMessage()
             ];
             return response()->json(['status'=>$status]);
+        }
+    }
+    //4c save
+    public function patientS4cCreate(Request $request){
+        DB::beginTransaction();
+        try{
+            $CurrentTime = Carbon::now();
+            $DateTime =$CurrentTime->toDateTimeString();
+
+            //Provesional diagnosis
+            $ProvisionalDiagnosis = $request->ProvisionalDiagnosis;
+            for($i=0;$i<count($ProvisionalDiagnosis); $i++){
+               $ProvisionalD = new MDataProvisionalDiagnosis();
+               $ProvisionalD->MDProvisionalDiagnosisId = Str::uuid();
+               $ProvisionalD->PatientId = $ProvisionalDiagnosis[$i]['PatientId'];
+               $ProvisionalD->CollectionDate = $DateTime;
+               $ProvisionalD->RefProvisionalDiagnosisId = $ProvisionalDiagnosis[$i]['RefProvisionalDiagnosisId'];
+               $ProvisionalD->Category = $ProvisionalDiagnosis[$i]['Category'];
+               $ProvisionalD->ProvisionalDiagnosis = $ProvisionalDiagnosis[$i]['ProvisionalDiagnosis'];
+               $ProvisionalD->OtherProvisionalDiagnosis = $ProvisionalDiagnosis[$i]['OtherProvisionalDiagnosis'];
+               $ProvisionalD->DiagnosisStatus = $ProvisionalDiagnosis[$i]['DiagnosisStatus'];
+               $ProvisionalD->Status  = $ProvisionalDiagnosis[$i]['Status'];
+               $ProvisionalD->CreateDate  = $DateTime;
+               $ProvisionalD->CreateUser  = $ProvisionalDiagnosis[$i]['CreateUser'];
+               $ProvisionalD->UpdateDate  = $DateTime;
+               $ProvisionalD->UpdateUser  = $ProvisionalDiagnosis[$i]['UpdateUser'];
+               $ProvisionalD->OrgId  = $ProvisionalDiagnosis[$i]['OrgId'];
+               $ProvisionalD->save();
+            }    
+            
+            //Lab Investigations
+            $LabInvestigations = $request->LabInvestigation;
+
+            for($i=0;$i<count($LabInvestigations); $i++){
+                $LabInvestigation = new MDataInvestigation();
+                $LabInvestigation->MDInvestigationId = Str::uuid();
+                $LabInvestigation->PatientId = $LabInvestigations[$i]['PatientId'];
+                $LabInvestigation->CollectionDate = $DateTime;
+                $LabInvestigation->InvestigationId = $LabInvestigations[$i]['InvestigationId'];
+                $LabInvestigation->OtherInvestigation = $LabInvestigations[$i]['OtherInvestigation'];
+                $LabInvestigation->Instruction = $LabInvestigations[$i]['Instruction'];
+                $LabInvestigation->PositiveNegativeStatus = $LabInvestigations[$i]['PositiveNegativeStatus'];
+                $LabInvestigation->Status  = $LabInvestigations[$i]['Status'];
+                $LabInvestigation->CreateDate  = $DateTime;
+                $LabInvestigation->CreateUser  = $LabInvestigations[$i]['CreateUser'];
+                $LabInvestigation->UpdateDate  = $DateTime;
+                $LabInvestigation->UpdateUser  = $LabInvestigations[$i]['UpdateUser'];
+                $LabInvestigation->OrgId  = $LabInvestigations[$i]['OrgId'];
+                $LabInvestigation->save();
+            }   
+
+            //Treatment Suggestions
+            $TreatmentSuggestion = $request->TreatmentSuggestion;
+
+            for($i=0;$i<count($TreatmentSuggestion); $i++){
+                $MDataTreatmentSuggestion = new MDataTreatmentSuggestion();
+                $MDataTreatmentSuggestion->MDTreatmentSuggestionId = Str::uuid();
+                $MDataTreatmentSuggestion->PatientId = $TreatmentSuggestion[$i]['PatientId'];
+                $MDataTreatmentSuggestion->CollectionDate = $DateTime;
+                $MDataTreatmentSuggestion->DrugId = $TreatmentSuggestion[$i]['DrugId'];
+                $MDataTreatmentSuggestion->DurationId = $TreatmentSuggestion[$i]['DurationId'];
+                $MDataTreatmentSuggestion->RefFrequencyId = $TreatmentSuggestion[$i]['RefFrequencyId'];
+                $MDataTreatmentSuggestion->Frequency = $TreatmentSuggestion[$i]['Frequency'];
+                $MDataTreatmentSuggestion->Hourly = $TreatmentSuggestion[$i]['Hourly'];
+                $MDataTreatmentSuggestion->DrugDurationValue = $TreatmentSuggestion[$i]['DrugDurationValue'];
+                $MDataTreatmentSuggestion->OtherDrug = $TreatmentSuggestion[$i]['OtherDrug'];
+                $MDataTreatmentSuggestion->RefInstructionId = $TreatmentSuggestion[$i]['RefInstructionId'];
+                $MDataTreatmentSuggestion->SpecialInstruction = $TreatmentSuggestion[$i]['SpecialInstruction'];
+                $MDataTreatmentSuggestion->Comment = $TreatmentSuggestion[$i]['Comment'];
+                $MDataTreatmentSuggestion->Status  = $TreatmentSuggestion[$i]['Status'];
+                $MDataTreatmentSuggestion->CreateDate  = $DateTime;
+                $MDataTreatmentSuggestion->CreateUser  = $TreatmentSuggestion[$i]['CreateUser'];
+                $MDataTreatmentSuggestion->UpdateDate  = $DateTime;
+                $MDataTreatmentSuggestion->UpdateUser  = $TreatmentSuggestion[$i]['UpdateUser'];
+                $MDataTreatmentSuggestion->OrgId  = $TreatmentSuggestion[$i]['OrgId'];
+                $MDataTreatmentSuggestion->save();
+            }    
+            
+            //Referral Section
+            $Referral = $request->Referral;
+
+            for($i=0;$i<count($Referral); $i++){
+                $MDataPatientReferral = new MDataPatientReferral();
+                $MDataPatientReferral->MDPatientReferralId = Str::uuid();
+                $MDataPatientReferral->PatientId = $Referral[$i]['PatientId'];
+                $MDataPatientReferral->RId = $Referral[$i]['RId'];
+                $MDataPatientReferral->HealthCenterId = $Referral[$i]['HealthCenterId'];
+                $MDataPatientReferral->CollectionDate = $DateTime;
+                $MDataPatientReferral->Status  = $Referral[$i]['Status'];
+                $MDataPatientReferral->CreateDate  = $DateTime;
+                $MDataPatientReferral->CreateUser  = $Referral[$i]['CreateUser'];
+                $MDataPatientReferral->UpdateDate  = $DateTime;
+                $MDataPatientReferral->UpdateUser  = $Referral[$i]['UpdateUser'];
+                $MDataPatientReferral->OrgId  = $Referral[$i]['OrgId'];
+                $MDataPatientReferral->save();
+            }   
+
+            //Advice
+            $Advice = $request->Advice;
+            for($i=0;$i<count($Advice); $i++){
+                $MDataAdvice = new MDataAdvice();
+                $MDataAdvice->MDAdviceId = Str::uuid();
+                $MDataAdvice->PatientId = $Advice[$i]['PatientId'];
+                $MDataAdvice->CollectionDate = $DateTime;
+                $MDataAdvice->AdviceId = $Advice[$i]['AdviceId'];
+                $MDataAdvice->Advice = $Advice[$i]['Advice'];
+                $MDataAdvice->Status  = $Advice[$i]['Status'];
+                $MDataAdvice->CreateDate  = $DateTime;
+                $MDataAdvice->CreateUser  = $Advice[$i]['CreateUser'];
+                $MDataAdvice->UpdateDate  = $DateTime;
+                $MDataAdvice->UpdateUser  = $Advice[$i]['UpdateUser'];
+                $MDataAdvice->OrgId  = $Advice[$i]['OrgId'];
+                $MDataAdvice->save();
+            }    
+
+            //Follow up Dates
+            $FollowUpDate = $request->FollowUpDate;
+            for($i=0;$i<count($FollowUpDate); $i++){
+                $MDataFollowUpDate = new MDataFollowUpDate();
+                $MDataFollowUpDate->MDFollowUpDateId = Str::uuid();
+                $MDataFollowUpDate->PatientId = $FollowUpDate[$i]['PatientId'];
+                $MDataFollowUpDate->CollectionDate = $DateTime;
+                $MDataFollowUpDate->FollowUpDate = $FollowUpDate[$i]['FollowUpDate'];
+                $MDataFollowUpDate->Status  = $FollowUpDate[$i]['Status'];
+                $MDataFollowUpDate->CreateDate  = $DateTime;
+                $MDataFollowUpDate->CreateUser  = $FollowUpDate[$i]['CreateUser'];
+                $MDataFollowUpDate->UpdateDate  = $DateTime;
+                $MDataFollowUpDate->UpdateUser  = $FollowUpDate[$i]['UpdateUser'];
+                $MDataFollowUpDate->OrgId  = $FollowUpDate[$i]['OrgId'];
+                $MDataFollowUpDate->save();
+            }    
+            DB::commit();
+            $status = [
+                'code'=> 200,
+                'message' =>'Station 4C saved successfully!'
+               ];
+
+           return response()->json($status);
+
+        }
+        catch(\Exception $e){
+            // Rollback the transaction in case of an exception
+            DB::rollBack();
+            $status = [
+                'code'=> 403,
+                'message'=>$e->getMessage()
+            ];
+
+            return response()->json(['status'=>$status]);
+
         }
     }
 }

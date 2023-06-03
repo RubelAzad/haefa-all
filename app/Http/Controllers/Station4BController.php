@@ -26,15 +26,15 @@ class Station4BController extends Controller
             //Obstetrics Information 
             $PatientObsGynae = new MDataPatientObsGynae();
             $PatientObsGynae->MDPatientObsGynaeId = Str::uuid();
-            $PatientObsGynae->PatientId = $request->PatientId;
+            $PatientObsGynae->PatientId = $request->ObstetricsInfoChildMoralityCervicalCancer['PatientId'];
             $PatientObsGynae->CollectionDate = $DateTime;
-            $PatientObsGynae->Gravida = $request->Gravida;
-            $PatientObsGynae->Para = $request->Para;
-            $PatientObsGynae->StillBirth = $request->StillBirth;
-            $PatientObsGynae->MiscarraigeOrAbortion = $request->MiscarraigeOrAbortion;
-            $PatientObsGynae->MR = $request->MR;
-            $PatientObsGynae->LivingMale = $request->LivingMale;
-            $PatientObsGynae->LivingFemale = $request->LivingFemale;
+            $PatientObsGynae->Gravida = $request->ObstetricsInfoChildMoralityCervicalCancer['Gravida'];
+            $PatientObsGynae->Para = $request->ObstetricsInfoChildMoralityCervicalCancer['Para'];
+            $PatientObsGynae->StillBirth = $request->ObstetricsInfoChildMoralityCervicalCancer['StillBirth'];
+            $PatientObsGynae->MiscarraigeOrAbortion = $request->ObstetricsInfoChildMoralityCervicalCancer['MiscarraigeOrAbortion'];
+            $PatientObsGynae->MR = $request->ObstetricsInfoChildMoralityCervicalCancer['MR'];
+            $PatientObsGynae->LivingMale = $request->ObstetricsInfoChildMoralityCervicalCancer['LivingMale'];
+            $PatientObsGynae->LivingFemale = $request->ObstetricsInfoChildMoralityCervicalCancer['LivingFemale'];
 
             if($request->male==1){
                 $PatientObsGynae->ChildMortality0To1 = "M";
@@ -54,47 +54,47 @@ class Station4BController extends Controller
             elseif($request->male==3){
                 $PatientObsGynae->ChildMortalityOver5 = "F";
             }
-            $PatientObsGynae->IsPregnant = $request->IsPregnant;
-            $PatientObsGynae->LMP = $request->LMP;
-            $PatientObsGynae->ContraceptionMethodId = $request->ContraceptionMethodId;
-            $PatientObsGynae->Comment = $request->Comment;
-            $PatientObsGynae->MenstruationProductId = $request->MenstruationProductId;
-            $PatientObsGynae->MenstruationProductUsageTimeId = $request->MenstruationProductUsageTimeId;
-            $PatientObsGynae->Status = $request->Status;
-            $PatientObsGynae->CreateUser = $request->CreateUser;
+            $PatientObsGynae->IsPregnant = $request->ObstetricsInfoChildMoralityCervicalCancer['IsPregnant'];
+            $PatientObsGynae->LMP = $request->ObstetricsInfoChildMoralityCervicalCancer['LMP'];
+            $PatientObsGynae->ContraceptionMethodId = $request->ObstetricsInfoChildMoralityCervicalCancer['ContraceptionMethodId'];
+            $PatientObsGynae->Comment = $request->ObstetricsInfoChildMoralityCervicalCancer['Comment'];
+            $PatientObsGynae->MenstruationProductId = $request->ObstetricsInfoChildMoralityCervicalCancer['MenstruationProductId'];
+            $PatientObsGynae->MenstruationProductUsageTimeId = $request->ObstetricsInfoChildMoralityCervicalCancer['MenstruationProductUsageTimeId'];
+            $PatientObsGynae->Status = $request->ObstetricsInfoChildMoralityCervicalCancer['Status'];
+            $PatientObsGynae->CreateUser = $request->ObstetricsInfoChildMoralityCervicalCancer['CreateUser'];
             $PatientObsGynae->CreateDate = $DateTime;
-            $PatientObsGynae->UpdateUser = $request->UpdateUser;
+            $PatientObsGynae->UpdateUser = $request->ObstetricsInfoChildMoralityCervicalCancer['UpdateUser'];
             $PatientObsGynae->UpdateDate =  $DateTime;
-            $PatientObsGynae->OrgId = $request->OrgId;
+            $PatientObsGynae->OrgId = $request->ObstetricsInfoChildMoralityCervicalCancer['OrgId'];
             $PatientObsGynae->save();
 
             $MDataPatientPregnancy = new MDataPatientPregnancy();
             $MDataPatientPregnancy->MDPatientPregnancyId = Str::uuid();
-            $MDataPatientPregnancy->PatientId = $request->PatientId;
+            $MDataPatientPregnancy->PatientId = $request->MenstrualHistory['PatientId'];
             $MDataPatientPregnancy->CollectionDate = $DateTime;
-            $MDataPatientPregnancy->LMP = $request->LMP;
-            $MDataPatientPregnancy->Status = $request->Status;
-            $MDataPatientPregnancy->CreateUser = $request->CreateUser;
+            $MDataPatientPregnancy->LMP = $request->MenstrualHistory['LMP'];
+            $MDataPatientPregnancy->Status = $request->MenstrualHistory['Status'];
+            $MDataPatientPregnancy->CreateUser = $request->MenstrualHistory['CreateUser'];
             $MDataPatientPregnancy->CreateDate = $DateTime;
-            $MDataPatientPregnancy->UpdateUser = $request->UpdateUser;
+            $MDataPatientPregnancy->UpdateUser = $request->MenstrualHistory['UpdateUser'];
             $MDataPatientPregnancy->UpdateDate =  $DateTime;
-            $MDataPatientPregnancy->OrgId = $request->OrgId;
-            $MDataPatientPregnancy->save();   
+            $MDataPatientPregnancy->OrgId = $request->MenstrualHistory['OrgId'];
+            $MDataPatientPregnancy->save();  
 
             //Cervical cancer screening
             $MDataPatientCervicalCancer = new MDataPatientCervicalCancer();
             $MDataPatientCervicalCancer->MDataPatientCervicalCancerId = Str::uuid();
-            $MDataPatientCervicalCancer->PatientId = $request->PatientId;
+            $MDataPatientCervicalCancer->PatientId = $request->CervicalCancerScreening['PatientId'];
             $MDataPatientCervicalCancer->CollectionDate = $DateTime;
-            $MDataPatientCervicalCancer->CCScreeningDiagnosis = $request->CCScreeningDiagnosis;
-            $MDataPatientCervicalCancer->CCScreeningResultStatus = $request->CCScreeningResultStatus;
-            $MDataPatientCervicalCancer->ReferralBiopsyStatus = $request->ReferralBiopsyStatus;
-            $MDataPatientCervicalCancer->Status = $request->Status;
-            $MDataPatientCervicalCancer->CreateUser = $request->CreateUser;
+            $MDataPatientCervicalCancer->CCScreeningDiagnosis = $request->CervicalCancerScreening['CCScreeningDiagnosis'];
+            $MDataPatientCervicalCancer->CCScreeningResultStatus = $request->CervicalCancerScreening['CCScreeningResultStatus'];
+            $MDataPatientCervicalCancer->ReferralBiopsyStatus = $request->CervicalCancerScreening['ReferralBiopsyStatus'];
+            $MDataPatientCervicalCancer->Status = $request->CervicalCancerScreening['Status'];
+            $MDataPatientCervicalCancer->CreateUser = $request->CervicalCancerScreening['CreateUser'];
             $MDataPatientCervicalCancer->CreateDate = $DateTime;
-            $MDataPatientCervicalCancer->UpdateUser = $request->UpdateUser;
+            $MDataPatientCervicalCancer->UpdateUser = $request->CervicalCancerScreening['UpdateUser'];
             $MDataPatientCervicalCancer->UpdateDate =  $DateTime;
-            $MDataPatientCervicalCancer->OrgId = $request->OrgId;
+            $MDataPatientCervicalCancer->OrgId = $request->CervicalCancerScreening['OrgId'];
             $MDataPatientCervicalCancer->save();
 
             // Commit [save] the transaction
