@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Patient;
 
 class MDataPhysicalExamGeneral extends Model
 {
@@ -17,4 +18,9 @@ class MDataPhysicalExamGeneral extends Model
     ];
 
     public $timestamps = false;
+
+    public function patient()
+    {
+      return $this->belongsTo(Patient::class, 'PatientId', 'PatientId');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Patient;
 
 class MDataPatientCCDetails extends Model
 {
@@ -12,4 +13,9 @@ class MDataPatientCCDetails extends Model
         'Nature','Status','CreateDate','CreateUser','UpdateDate','UpdateUser','OrgId'
     ];
     public $timestamps = false;
+
+    public function patient()
+    {
+      return $this->belongsTo(Patient::class, 'PatientId', 'PatientId');
+    }
 }
