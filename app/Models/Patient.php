@@ -8,6 +8,12 @@ use App\Models\MaritalStatus;
 use App\Models\MDataBP;
 use App\Models\MDataHeightWeight;
 use App\Models\MDataGlucoseHb;
+use App\Models\MDataPatientCCDetails;
+use App\Models\MDataPhysicalExamGeneral;
+use App\Models\MDataPhysicalFinding;
+use App\Models\MDataRxDetails;
+use App\Models\MDataInvestigation;
+
 class Patient extends Model
 {
     
@@ -37,6 +43,26 @@ class Patient extends Model
     public function glucose_hbs()
     {
         return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId'); 
+    }
+    public function cc_details()
+    {
+        return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
+    }
+    public function physical_exam_general()
+    {
+        return $this->hasMany(MDataPhysicalExamGeneral::class, 'PatientId', 'PatientId'); 
+    }
+    public function physical_finding()
+    {
+        return $this->hasMany(MDataPhysicalFinding::class, 'PatientId', 'PatientId'); 
+    }
+    public function rx_details()
+    {
+        return $this->hasMany(MDataRxDetails::class, 'PatientId', 'PatientId'); 
+    }
+    public function investigation()
+    {
+        return $this->hasMany(MDataInvestigation::class, 'PatientId', 'PatientId'); 
     }
 
 }
