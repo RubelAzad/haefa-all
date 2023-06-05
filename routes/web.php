@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth'], function ($router) {
     //General Examination
     //Current medication taken
     Route::get('current-medication-token','Station4AController@currentMedicationTaken'); //get current medication taken
-    //Patient mental helth
+    //Patient mental health
     Route::get('patient-mental-health','Station4AController@patientMentalHealth'); //patient mental health
     //Child Vaccination
     Route::get('child-vaccination','Station4AController@childVaccination'); //Adult vaccination

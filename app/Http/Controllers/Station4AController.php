@@ -23,6 +23,7 @@ use App\Models\MDataFamilyIllnessHistory;
 use App\Models\MDataPatientVaccine;
 use App\Models\MDataRxDetails;
 use App\Models\RefDuration;
+use App\Models\RefDrug;
 use Carbon\Carbon;
 
 class Station4AController extends Controller
@@ -411,7 +412,7 @@ class Station4AController extends Controller
     
     public function currentMedicationTaken(){
         try{
-            $data = RefDuration::select('DurationId','DurationCode')->get();
+            $data = RefDrug::select('DrugId','DrugCode')->get();
             $status = [
                 'code'=> 200,
                 'message' =>'Current medication taken get successfully'
@@ -429,7 +430,7 @@ class Station4AController extends Controller
     
     public function patientMentalHealth(){
         try{
-            $data = RefQuestion::select('QuestionId','QuestionTitle')->get();
+            $data = RefQuestion::with('getAnswers')->get();
             $status = [
                 'code'=> 200,
                 'message' =>'Patient mental health get successfully'

@@ -12,4 +12,8 @@ class RefQuestion extends Model
         'SortOrder','Status','CreateDate','CreateUser','UpdateDate','UpdateUser','OrgId'
     ];
     public $timestamps = false;
+
+    public function getAnswers(){
+        return $this->hasMany(RefAnswer::class,'AnswerModuleName','QuestionModuleName');
+    }
 }

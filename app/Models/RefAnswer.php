@@ -14,4 +14,8 @@ class RefAnswer extends Model
     ];
 
     public $timestamps = false;
+
+    public function getQuestion(){
+        return $this->hasMany(RefQuestion::class,'QuestionModuleName','AnswerModuleName');
+    }
 }
