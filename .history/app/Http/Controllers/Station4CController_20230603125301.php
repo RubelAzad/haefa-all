@@ -180,7 +180,7 @@ class Station4CController extends Controller
                $ProvisionalD->CreateDate  = $DateTime;
                $ProvisionalD->CreateUser  = $ProvisionalDiagnosis[$i]['CreateUser'];
                $ProvisionalD->UpdateDate  = $DateTime;
-               $ProvisionalD->UpdateUser  = "";
+               $ProvisionalD->UpdateUser  = $ProvisionalDiagnosis[$i]['UpdateUser'];
                $ProvisionalD->OrgId  = $ProvisionalDiagnosis[$i]['OrgId'];
                $ProvisionalD->save();
             }    
@@ -201,7 +201,7 @@ class Station4CController extends Controller
                 $LabInvestigation->CreateDate  = $DateTime;
                 $LabInvestigation->CreateUser  = $LabInvestigations[$i]['CreateUser'];
                 $LabInvestigation->UpdateDate  = $DateTime;
-                $LabInvestigation->UpdateUser  = "";
+                $LabInvestigation->UpdateUser  = $LabInvestigations[$i]['UpdateUser'];
                 $LabInvestigation->OrgId  = $LabInvestigations[$i]['OrgId'];
                 $LabInvestigation->save();
             }   
@@ -216,17 +216,19 @@ class Station4CController extends Controller
                 $MDataTreatmentSuggestion->CollectionDate = $DateTime;
                 $MDataTreatmentSuggestion->DrugId = $TreatmentSuggestion[$i]['drugId'];
                 $MDataTreatmentSuggestion->DurationId = $TreatmentSuggestion[$i]['durationId'];
-                $MDataTreatmentSuggestion->RefFrequencyId = $TreatmentSuggestion[$i]['frequencyId'];
-                $MDataTreatmentSuggestion->Frequency = $TreatmentSuggestion[$i]['frequency'];
-                $MDataTreatmentSuggestion->DrugDurationValue = $TreatmentSuggestion[$i]['drugDurationValue'];
-                $MDataTreatmentSuggestion->OtherDrug = $TreatmentSuggestion[$i]['otherDrug'];
-                $MDataTreatmentSuggestion->SpecialInstruction = $TreatmentSuggestion[$i]['specialInstruction'];
-                $MDataTreatmentSuggestion->Comment = $TreatmentSuggestion[$i]['comment'];
+                $MDataTreatmentSuggestion->RefFrequencyId = $TreatmentSuggestion[$i]['RefFrequencyId'];
+                $MDataTreatmentSuggestion->Frequency = $TreatmentSuggestion[$i]['Frequency'];
+                $MDataTreatmentSuggestion->Hourly = $TreatmentSuggestion[$i]['Hourly'];
+                $MDataTreatmentSuggestion->DrugDurationValue = $TreatmentSuggestion[$i]['DrugDurationValue'];
+                $MDataTreatmentSuggestion->OtherDrug = $TreatmentSuggestion[$i]['OtherDrug'];
+                $MDataTreatmentSuggestion->RefInstructionId = $TreatmentSuggestion[$i]['RefInstructionId'];
+                $MDataTreatmentSuggestion->SpecialInstruction = $TreatmentSuggestion[$i]['SpecialInstruction'];
+                $MDataTreatmentSuggestion->Comment = $TreatmentSuggestion[$i]['Comment'];
                 $MDataTreatmentSuggestion->Status  = "A";
                 $MDataTreatmentSuggestion->CreateDate  = $DateTime;
                 $MDataTreatmentSuggestion->CreateUser  = $TreatmentSuggestion[$i]['CreateUser'];
                 $MDataTreatmentSuggestion->UpdateDate  = $DateTime;
-                $MDataTreatmentSuggestion->UpdateUser  = "";
+                $MDataTreatmentSuggestion->UpdateUser  = $TreatmentSuggestion[$i]['UpdateUser'];
                 $MDataTreatmentSuggestion->OrgId  = $TreatmentSuggestion[$i]['OrgId'];
                 $MDataTreatmentSuggestion->save();
             }    
@@ -238,14 +240,14 @@ class Station4CController extends Controller
                 $MDataPatientReferral = new MDataPatientReferral();
                 $MDataPatientReferral->MDPatientReferralId = Str::uuid();
                 $MDataPatientReferral->PatientId = $Referral[$i]['PatientId'];
-                $MDataPatientReferral->RId = $Referral[$i]['rId'];
-                $MDataPatientReferral->HealthCenterId = $Referral[$i]['healthCenterId'];
+                $MDataPatientReferral->RId = $Referral[$i]['RId'];
+                $MDataPatientReferral->HealthCenterId = $Referral[$i]['HealthCenterId'];
                 $MDataPatientReferral->CollectionDate = $DateTime;
                 $MDataPatientReferral->Status  = "A";
                 $MDataPatientReferral->CreateDate  = $DateTime;
                 $MDataPatientReferral->CreateUser  = $Referral[$i]['CreateUser'];
                 $MDataPatientReferral->UpdateDate  = $DateTime;
-                $MDataPatientReferral->UpdateUser  = "";
+                $MDataPatientReferral->UpdateUser  = $Referral[$i]['UpdateUser'];
                 $MDataPatientReferral->OrgId  = $Referral[$i]['OrgId'];
                 $MDataPatientReferral->save();
             }   
@@ -257,13 +259,13 @@ class Station4CController extends Controller
                 $MDataAdvice->MDAdviceId = Str::uuid();
                 $MDataAdvice->PatientId = $Advice[$i]['PatientId'];
                 $MDataAdvice->CollectionDate = $DateTime;
-                $MDataAdvice->AdviceId = $Advice[$i]['adviceId'];
-                $MDataAdvice->Advice = $Advice[$i]['advice'];
+                $MDataAdvice->AdviceId = $Advice[$i]['AdviceId'];
+                $MDataAdvice->Advice = $Advice[$i]['Advice'];
                 $MDataAdvice->Status  = "A";
                 $MDataAdvice->CreateDate  = $DateTime;
                 $MDataAdvice->CreateUser  = $Advice[$i]['CreateUser'];
                 $MDataAdvice->UpdateDate  = $DateTime;
-                $MDataAdvice->UpdateUser  = "";
+                $MDataAdvice->UpdateUser  = $Advice[$i]['UpdateUser'];
                 $MDataAdvice->OrgId  = $Advice[$i]['OrgId'];
                 $MDataAdvice->save();
             }    
@@ -275,13 +277,12 @@ class Station4CController extends Controller
                 $MDataFollowUpDate->MDFollowUpDateId = Str::uuid();
                 $MDataFollowUpDate->PatientId = $FollowUpDate[$i]['PatientId'];
                 $MDataFollowUpDate->CollectionDate = $DateTime;
-                $MDataFollowUpDate->FollowUpDate = $FollowUpDate[$i]['followUpDate'];
-                $MDataFollowUpDate->Comment = $FollowUpDate[$i]['comment'];
+                $MDataFollowUpDate->FollowUpDate = $FollowUpDate[$i]['FollowUpDate'];
                 $MDataFollowUpDate->Status  = "A";
                 $MDataFollowUpDate->CreateDate  = $DateTime;
                 $MDataFollowUpDate->CreateUser  = $FollowUpDate[$i]['CreateUser'];
                 $MDataFollowUpDate->UpdateDate  = $DateTime;
-                $MDataFollowUpDate->UpdateUser  = "";
+                $MDataFollowUpDate->UpdateUser  = $FollowUpDate[$i]['UpdateUser'];
                 $MDataFollowUpDate->OrgId  = $FollowUpDate[$i]['OrgId'];
                 $MDataFollowUpDate->save();
             }    
