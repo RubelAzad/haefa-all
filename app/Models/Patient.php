@@ -14,6 +14,7 @@ use App\Models\MDataPhysicalFinding;
 use App\Models\MDataRxDetails;
 use App\Models\MDataInvestigation;
 
+
 class Patient extends Model
 {
     
@@ -63,6 +64,24 @@ class Patient extends Model
     public function investigation()
     {
         return $this->hasMany(MDataInvestigation::class, 'PatientId', 'PatientId'); 
+    }
+
+    public function bps_patient()
+    {
+        return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1);
+    }
+    public function height_weights_patient()
+    {
+        return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+    }
+    public function glucose_hbs_patient()
+    {
+        return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+    }
+    public function cc_details_patient()
+    {
+        //return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+        return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
     }
 
 }
