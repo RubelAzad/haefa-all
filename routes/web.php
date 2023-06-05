@@ -60,6 +60,12 @@ Route::group(['prefix' => 'api'], function ($router) {
 
     //Prescription Preview End
 
+     //Prescription Preview start
+
+     Route::post('prescription','PrescriptionController@prescription');
+
+     //Prescription Preview End
+
 
     
 });
