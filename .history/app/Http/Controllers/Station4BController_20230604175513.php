@@ -63,7 +63,7 @@ class Station4BController extends Controller
             $PatientObsGynae->Status = "A";
             $PatientObsGynae->CreateUser = $request->ObstetricsInfoChildMoralityCervicalCancer['CreateUser'];
             $PatientObsGynae->CreateDate = $DateTime;
-            $PatientObsGynae->UpdateUser = "";
+            $PatientObsGynae->UpdateUser = $request->ObstetricsInfoChildMoralityCervicalCancer['UpdateUser'];
             $PatientObsGynae->UpdateDate =  $DateTime;
             $PatientObsGynae->OrgId = $request->ObstetricsInfoChildMoralityCervicalCancer['OrgId'];
             $PatientObsGynae->save();
@@ -76,7 +76,7 @@ class Station4BController extends Controller
             $MDataPatientPregnancy->Status = "A";
             $MDataPatientPregnancy->CreateUser = $request->MenstrualHistory['CreateUser'];
             $MDataPatientPregnancy->CreateDate = $DateTime;
-            $MDataPatientPregnancy->UpdateUser = "";
+            $MDataPatientPregnancy->UpdateUser = $request->MenstrualHistory['UpdateUser'];
             $MDataPatientPregnancy->UpdateDate =  $DateTime;
             $MDataPatientPregnancy->OrgId = $request->MenstrualHistory['OrgId'];
             $MDataPatientPregnancy->save();  
@@ -92,7 +92,7 @@ class Station4BController extends Controller
             $MDataPatientCervicalCancer->Status = "A";
             $MDataPatientCervicalCancer->CreateUser = $request->CervicalCancerScreening['CreateUser'];
             $MDataPatientCervicalCancer->CreateDate = $DateTime;
-            $MDataPatientCervicalCancer->UpdateUser = "";
+            $MDataPatientCervicalCancer->UpdateUser = $request->CervicalCancerScreening['UpdateUser'];
             $MDataPatientCervicalCancer->UpdateDate =  $DateTime;
             $MDataPatientCervicalCancer->OrgId = $request->CervicalCancerScreening['OrgId'];
             $MDataPatientCervicalCancer->save();

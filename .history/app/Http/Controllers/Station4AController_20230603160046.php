@@ -19,7 +19,6 @@ use App\Models\RefSocialBehavior;
 use App\Models\MDataPhysicalExamGeneral;
 use App\Models\MDataPhysicalFinding;
 use App\Models\MDataPatientQuestionAnswer;
-use App\Models\MDataFamilyIllnessHistory;
 use App\Models\MDataPatientVaccine;
 use App\Models\MDataRxDetails;
 use App\Models\RefDuration;
@@ -76,10 +75,8 @@ class Station4AController extends Controller
             //MDataPatientCCDetails 
            
            $Complaints = $request->Complaints;
-
-        //    return response()->json($request->all());
            
-           for($i=0;$i<count($Complaints); $i++){
+           foreach($i=0;$i<count($Complaints); $i++){
 
                 $Complaint = new MDataPatientCCDetails(); 
                 $Complaint->MDCCId = Str::uuid();
@@ -95,7 +92,7 @@ class Station4AController extends Controller
                 $Complaint->CreateDate  = $DateTime;
                 $Complaint->CreateUser  = $Complaints[$i]['CreateUser'];
                 $Complaint->UpdateDate  = $DateTime;
-                $Complaint->UpdateUser  = "";
+                $Complaint->UpdateUser  = $Complaints[$i]['UpdateUser'];
                 $Complaint->OrgId  = $Complaints[$i]['OrgId'];
                 $Complaint->save();
            }
@@ -112,7 +109,7 @@ class Station4AController extends Controller
                $PresentIll->Status = 1;
                $PresentIll->CreateUser = $PresentIllness[$i]['CreateUser'];
                $PresentIll->CreateDate = $DateTime;
-               $PresentIll->UpdateUser = "";
+               $PresentIll->UpdateUser = $PresentIllness[$i]['UpdateUser'];
                $PresentIll->UpdateDate =  $DateTime;
                $PresentIll->OrgId = $PresentIllness[$i]['OrgId'];
                $PresentIll->save();
@@ -130,7 +127,7 @@ class Station4AController extends Controller
                 $PastIll->Status = 2;
                 $PastIll->CreateUser = $PastIllness[$i]['CreateUser'];
                 $PastIll->CreateDate = $DateTime;
-                $PastIll->UpdateUser = "";
+                $PastIll->UpdateUser = $PastIllness[$i]['UpdateUser'];
                 $PastIll->UpdateDate =  $DateTime;
                 $PastIll->OrgId = $PastIllness[$i]['OrgId'];
                 $PastIll->save();
@@ -149,7 +146,7 @@ class Station4AController extends Controller
                 $FamilyIll->Status = "A";
                 $FamilyIll->CreateUser = $FamilyIllness[$i]['CreateUser'];
                 $FamilyIll->CreateDate = $DateTime;
-                $FamilyIll->UpdateUser = "";
+                $FamilyIll->UpdateUser = $FamilyIllness[$i]['UpdateUser'];
                 $FamilyIll->UpdateDate =  $DateTime;
                 $FamilyIll->OrgId = $FamilyIllness[$i]['OrgId'];
                 $FamilyIll->save();
@@ -167,7 +164,7 @@ class Station4AController extends Controller
                 $SocialBehavior->Status = "A";
                 $SocialBehavior->CreateUser = $SocialHistory[$i]['CreateUser'];
                 $SocialBehavior->CreateDate = $DateTime;
-                $SocialBehavior->UpdateUser = "";
+                $SocialBehavior->UpdateUser = $SocialHistory[$i]['UpdateUser'];
                 $SocialBehavior->UpdateDate =  $DateTime;
                 $SocialBehavior->OrgId = $SocialHistory[$i]['OrgId'];
                 $SocialBehavior->save();
@@ -189,7 +186,7 @@ class Station4AController extends Controller
                 $VariousSymptom->Status = "A";
                 $VariousSymptom->CreateUser = $TBScreening[$i]['CreateUser'];
                 $VariousSymptom->CreateDate = $DateTime;
-                $VariousSymptom->UpdateUser = "";
+                $VariousSymptom->UpdateUser = $TBScreening[$i]['UpdateUser'];
                 $VariousSymptom->UpdateDate =  $DateTime;
                 $VariousSymptom->OrgId = $TBScreening[$i]['OrgId'];
                 $VariousSymptom->save();
@@ -218,7 +215,7 @@ class Station4AController extends Controller
                 $ExamGeneral->Status = "A";
                 $ExamGeneral->CreateUser = $GeneralExamination[$i]['CreateUser'];
                 $ExamGeneral->CreateDate = $DateTime;
-                $ExamGeneral->UpdateUser = "";
+                $ExamGeneral->UpdateUser = $GeneralExamination[$i]['UpdateUser'];
                 $ExamGeneral->UpdateDate =  $DateTime;
                 $ExamGeneral->OrgId = $GeneralExamination[$i]['OrgId'];
                 $ExamGeneral->save();
@@ -235,7 +232,7 @@ class Station4AController extends Controller
                 $SystemicExamination->Status = "A";
                 $SystemicExamination->CreateUser = $SystemicExam[$i]['CreateUser'];
                 $SystemicExamination->CreateDate = $DateTime;
-                $SystemicExamination->UpdateUser = "";
+                $SystemicExamination->UpdateUser = $SystemicExam[$i]['UpdateUser'];
                 $SystemicExamination->UpdateDate =  $DateTime;
                 $SystemicExamination->OrgId = $SystemicExam[$i]['OrgId'];
                 $SystemicExamination->save();
@@ -254,7 +251,7 @@ class Station4AController extends Controller
                 $MDataRxDetail->Status = "A";
                 $MDataRxDetail->CreateUser = $MedicationTaken[$i]['CreateUser'];
                 $MDataRxDetail->CreateDate = $DateTime;
-                $MDataRxDetail->UpdateUser = "";
+                $MDataRxDetail->UpdateUser = $MedicationTaken[$i]['UpdateUser'];
                 $MDataRxDetail->UpdateDate =  $DateTime;
                 $MDataRxDetail->OrgId = $MedicationTaken[$i]['OrgId'];
                 $MDataRxDetail->save();
@@ -269,10 +266,11 @@ class Station4AController extends Controller
                 $PatientQuestionAnswer->CollectionDate = $DateTime;
                 $PatientQuestionAnswer->QuestionId = $MentalHealth[$i]['questionId'];
                 $PatientQuestionAnswer->AnswerId = $MentalHealth[$i]['answerId'];
+                $PatientQuestionAnswer->Comment = $MentalHealth[$i]['comment'];
+                $PatientQuestionAnswer->Status = "A";
                 $PatientQuestionAnswer->CreateUser = $MentalHealth[$i]['CreateUser'];
                 $PatientQuestionAnswer->CreateDate = $DateTime;
-                $PatientQuestionAnswer->Status = "A";
-                $PatientQuestionAnswer->UpdateUser = "";
+                $PatientQuestionAnswer->UpdateUser = $MentalHealth[$i]['UpdateUser'];
                 $PatientQuestionAnswer->UpdateDate =  $DateTime;
                 $PatientQuestionAnswer->OrgId = $MentalHealth[$i]['OrgId'];
                 $PatientQuestionAnswer->save();
@@ -291,7 +289,7 @@ class Station4AController extends Controller
                 $PatientVaccine->Status = "A";
                 $PatientVaccine->CreateUser = $ChildVaccination[$i]['CreateUser'];
                 $PatientVaccine->CreateDate = $DateTime;
-                $PatientVaccine->UpdateUser = "";
+                $PatientVaccine->UpdateUser = $ChildVaccination[$i]['UpdateUser'];
                 $PatientVaccine->UpdateDate =  $DateTime;
                 $PatientVaccine->OrgId = $ChildVaccination[$i]['OrgId'];
                 $PatientVaccine->save();
@@ -310,7 +308,7 @@ class Station4AController extends Controller
                 $AdultVaccine->Status = "A";
                 $AdultVaccine->CreateUser = $AdultVaccination[$i]['CreateUser'];
                 $AdultVaccine->CreateDate = $DateTime;
-                $AdultVaccine->UpdateUser = "";
+                $AdultVaccine->UpdateUser = $AdultVaccination[$i]['UpdateUser'];
                 $AdultVaccine->UpdateDate =  $DateTime;
                 $AdultVaccine->OrgId = $AdultVaccination[$i]['OrgId'];
                 $AdultVaccine->save();
