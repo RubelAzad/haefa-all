@@ -18,52 +18,45 @@ class PrescriptionController extends Controller
 {
     public function prescription(Request $request){
 
-        // $mdatabp=Patient::with('cc_details_patient','bps_patient','height_weights_patient','glucose_hbs_patient')->where('PatientId','=',$request->patientId)->get();
+        $patientDetails=Patient::with('Gender','MartitalStatus')->where('PatientId','=',$request->patientId)->get();
 
-        // return $mdatabp;
-
-        // $dataPatient=DB::table('Patient as p')
-        //     ->select('p.*','c.*','hw.*')
-        // ->join('MDataPatientCCDetails as c','p.PatientId','=','c.PatientId')
-        // ->join('MDataHeightWeight as hw','p.PatientId','=','hw.PatientId')
-        // ->where('p.PatientId','=',$request->patientId)
-        // ->get();
-        
-        // $ProvisionalDx = DB::select("SELECT MAX(ProvisionalDiagnosis) AS ProvisionalDiagnosis, MAX(DiagnosisStatus) AS DiagnosisStatus, MAX(OtherProvisionalDiagnosis) AS OtherProvisionalDiagnosis, CAST(CreateDate AS date) as CreateDate
-        // FROM MDataProvisionalDiagnosis WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
-        // = CAST(
-        //     (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-        //     FROM MDataProvisionalDiagnosis
-        //     GROUP BY CAST(CreateDate AS date)
-        //     ORDER BY MaxCreateDate DESC)
-        //     AS date) GROUP BY CreateDate ORDER BY CreateDate");
-
-        // return $ProvisionalDx;
-
-        // $Complaints= DB::select("SELECT MAX(ChiefComplain) AS ChiefComplain, CAST(CreateDate AS date) as CreateDate
-        //     FROM MDataPatientCCDetails WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
-        //     = CAST(
-        //         (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-        //         FROM MDataPatientCCDetails
-        //         GROUP BY CAST(CreateDate AS date)
-        //         ORDER BY MaxCreateDate DESC)
-        //         AS date) GROUP BY CreateDate ORDER BY CreateDate");
-
-        
-        // return $Complaints;
-
-        //$cc=MDataPatientCCDetails::where('PatientId','=',$request->patientId)->->get();
-
-        $Complaints= DB::select("SELECT MAX(ChiefComplain) AS ChiefComplain, CAST(CreateDate AS date) as CreateDate
-            FROM MDataPatientCCDetails WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
+        $Complaints= DB::select("SELECT MAX(PC.ChiefComplain) AS ChiefComplain, MAX(PC.CCDurationValue) AS CCDurationValue, MAX(PC.OtherCC) AS OtherCC, MAX(RD.DurationInEnglish) AS DurationInEnglish, CAST(PC.CreateDate AS date) as CreateDate
+            FROM MDataPatientCCDetails as PC
+            INNER JOIN RefDuration as RD on RD.DurationId = PC.DurationId
+            WHERE PatientId = '$request->patientId' AND CAST(PC.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
                 FROM MDataPatientCCDetails
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
-                AS date) GROUP BY CreateDate ORDER BY CreateDate");
+                AS date) GROUP BY PC.CreateDate ORDER BY PC.CreateDate");
 
-        $OS = Patient::with('bps_patient','height_weights_patient','glucose_hbs_patient')->where('PatientId','=',$request->patientId)->get();
+        $HeightWeight= DB::select("SELECT TOP 1 MAX(Height) AS Height, MAX(Weight) AS Weight, MAX(BMI) AS BMI, MAX(BMIStatus) AS BMIStatus, CAST(CreateDate AS date) as CreateDate
+            FROM MDataHeightWeight WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
+            = CAST(
+                (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
+                FROM MDataHeightWeight
+                GROUP BY CAST(CreateDate AS date)
+                ORDER BY MaxCreateDate DESC)
+                AS date) GROUP BY CreateDate ORDER BY CreateDate");
+        
+        $BP= DB::select("SELECT TOP 1 MAX(BPSystolic1) AS BPSystolic1, MAX(BPDiastolic1) AS BPDiastolic1, MAX(BPSystolic2) AS BPSystolic2, MAX(BPDiastolic2) AS BPDiastolic2, MAX(HeartRate) AS HeartRate, MAX(CurrentTemparature) AS CurrentTemparature, CAST(CreateDate AS date) as CreateDate
+            FROM MDataBP WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
+            = CAST(
+                (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
+                FROM MDataBP
+                GROUP BY CAST(CreateDate AS date)
+                ORDER BY MaxCreateDate DESC)
+                AS date) GROUP BY CreateDate ORDER BY CreateDate");
+        
+        $GlucoseHb = DB::select("SELECT TOP 1 MAX(RBG) AS RBG, MAX(FBG) AS FBG, MAX(Hemoglobin) AS Hemoglobin, MAX(HrsFromLastEat) AS HrsFromLastEat, CAST(CreateDate AS date) as CreateDate
+            FROM MDataGlucoseHb WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
+            = CAST(
+                (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
+                FROM MDataGlucoseHb
+                GROUP BY CAST(CreateDate AS date)
+                ORDER BY MaxCreateDate DESC)
+                AS date) GROUP BY CreateDate ORDER BY CreateDate");
 
         $ProvisionalDx = DB::select("SELECT MAX(ProvisionalDiagnosis) AS ProvisionalDiagnosis, MAX(DiagnosisStatus) AS DiagnosisStatus, MAX(OtherProvisionalDiagnosis) AS OtherProvisionalDiagnosis, CAST(CreateDate AS date) as CreateDate
         FROM MDataProvisionalDiagnosis WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
@@ -140,8 +133,11 @@ class PrescriptionController extends Controller
         return response()->json([
             'message' => 'Final Prescription',
             'code'=>200,
+            'PatientDetails'=>$patientDetails,
             'Complaints'=>$Complaints,
-            'OS'=>$OS,
+            'HeightWeight'=>$HeightWeight,
+            'BP'=>$BP,
+            'GlucoseHb'=>$GlucoseHb,
             'ProvisionalDx'=>$ProvisionalDx,
             'Investigation'=>$Investigation,
             'Treatment'=>$Treatment,

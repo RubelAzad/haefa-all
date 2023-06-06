@@ -51,7 +51,8 @@ Route::group(['prefix' => 'api'], function ($router) {
     //station 4D End
 
      //station 4E start
-    Route::post('cra-lab-create','Station4DController@patientConRisk');
+    Route::get('get-prescription-id','Station4EController@getPrescriptionCreation');
+    Route::post('cra-lab-create','Station4EController@patientConRisk');
 
      //station 4E End
     //Prescription Preview start
