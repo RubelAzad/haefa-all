@@ -70,6 +70,7 @@ class Station4EController extends Controller
         $PC = new PrescriptionCreation();
         $PC->PatientId = $PatientId;
         $PC->PrescriptionId = $request->PrescriptionId;
+        $PC->EmployeeId = $request->EmployeeId;
         $PC->Status = 1;
         $PC->CreateUser = $request->CreateUser;
         $PC->CreateDate = $date;
