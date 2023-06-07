@@ -20,6 +20,15 @@ class PrescriptionController extends Controller
 
         $patientDetails=Patient::with('Gender','MartitalStatus')->where('PatientId','=',$request->patientId)->get();
 
+        $prescriptionCreation= DB::select("SELECT TOP 1 MAX(PrescriptionId) AS PrescriptionId, CAST(CreateDate AS date) as CreateDate
+            FROM PrescriptionCreation WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
+            = CAST(
+                (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
+                FROM PrescriptionCreation
+                GROUP BY CAST(CreateDate AS date)
+                ORDER BY MaxCreateDate DESC)
+                AS date) GROUP BY CreateDate ORDER BY CreateDate");
+
         $Complaints= DB::select("SELECT MAX(PC.ChiefComplain) AS ChiefComplain, MAX(PC.CCDurationValue) AS CCDurationValue, MAX(PC.OtherCC) AS OtherCC, MAX(RD.DurationInEnglish) AS DurationInEnglish, CAST(PC.CreateDate AS date) as CreateDate
             FROM MDataPatientCCDetails as PC
             INNER JOIN RefDuration as RD on RD.DurationId = PC.DurationId
@@ -80,7 +89,7 @@ class PrescriptionController extends Controller
                 AS date) GROUP BY I.CreateDate ORDER BY I.CreateDate");
 
 
-        $Treatment= DB::select("SELECT MAX(T.Frequency) AS Frequency, MAX(T.DrugDurationValue) AS DrugDurationValue,MAX(T.OtherDrug) AS OtherDrug, MAX(Dr.DrugCode) AS DrugCode, MAX(Dr.DrugDose) AS DrugDose, MAX(Ins.InstructionInBangla) AS InstructionInBangla, CAST(T.CreateDate AS date) as CreateDate
+        $Treatment= DB::select("SELECT MAX(T.Frequency) AS Frequency, MAX(T.DrugDurationValue) AS DrugDurationValue,MAX(T.OtherDrug) AS OtherDrug,MAX(T.SpecialInstruction) AS SpecialInstruction, MAX(Dr.DrugCode) AS DrugCode, MAX(Dr.Description) AS Description, MAX(Dr.DrugDose) AS DrugDose, MAX(Ins.InstructionInBangla) AS InstructionInBangla, CAST(T.CreateDate AS date) as CreateDate
             FROM MDataTreatmentSuggestion as T
             INNER JOIN RefDrug as Dr on Dr.DrugId = T.DrugId
             INNER JOIN RefInstruction as Ins on Ins.RefInstructionId = T.RefInstructionId
@@ -134,6 +143,7 @@ class PrescriptionController extends Controller
             'message' => 'Final Prescription',
             'code'=>200,
             'PatientDetails'=>$patientDetails,
+            'prescriptionCreation'=>$prescriptionCreation,
             'Complaints'=>$Complaints,
             'HeightWeight'=>$HeightWeight,
             'BP'=>$BP,
