@@ -33,55 +33,55 @@ class Patient extends Model
     {
         return $this->hasOne(MaritalStatus::class, 'MaritalStatusId', 'MaritalStatusId')->select('MaritalStatusId','MaritalStatusCode'); 
     }
-    public function bps()
-    {
-        return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId'); 
-    }
-    public function height_weights()
-    {
-        return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId'); 
-    }
-    public function glucose_hbs()
-    {
-        return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId'); 
-    }
-    public function cc_details()
-    {
-        return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
-    }
-    public function physical_exam_general()
-    {
-        return $this->hasMany(MDataPhysicalExamGeneral::class, 'PatientId', 'PatientId'); 
-    }
-    public function physical_finding()
-    {
-        return $this->hasMany(MDataPhysicalFinding::class, 'PatientId', 'PatientId'); 
-    }
-    public function rx_details()
-    {
-        return $this->hasMany(MDataRxDetails::class, 'PatientId', 'PatientId'); 
-    }
-    public function investigation()
-    {
-        return $this->hasMany(MDataInvestigation::class, 'PatientId', 'PatientId'); 
-    }
+    // public function bps()
+    // {
+    //     return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function height_weights()
+    // {
+    //     return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function glucose_hbs()
+    // {
+    //     return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function cc_details()
+    // {
+    //     return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function physical_exam_general()
+    // {
+    //     return $this->hasMany(MDataPhysicalExamGeneral::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function physical_finding()
+    // {
+    //     return $this->hasMany(MDataPhysicalFinding::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function rx_details()
+    // {
+    //     return $this->hasMany(MDataRxDetails::class, 'PatientId', 'PatientId'); 
+    // }
+    // public function investigation()
+    // {
+    //     return $this->hasMany(MDataInvestigation::class, 'PatientId', 'PatientId'); 
+    // }
 
-    public function bps_patient()
-    {
-        return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1);
-    }
-    public function height_weights_patient()
-    {
-        return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
-    }
-    public function glucose_hbs_patient()
-    {
-        return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
-    }
-    public function cc_details_patient()
-    {
-        //return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
-        return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
-    }
+    // public function bps_patient()
+    // {
+    //     return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1);
+    // }
+    // public function height_weights_patient()
+    // {
+    //     return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+    // }
+    // public function glucose_hbs_patient()
+    // {
+    //     return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+    // }
+    // public function cc_details_patient()
+    // {
+    //     //return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId')->latest('CreateDate')->limit(1); 
+    //     return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
+    // }
 
 }

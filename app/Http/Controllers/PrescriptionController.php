@@ -24,18 +24,18 @@ class PrescriptionController extends Controller
             FROM PrescriptionCreation WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM PrescriptionCreation
+                FROM PrescriptionCreation WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY CreateDate ORDER BY CreateDate");
 
         $Complaints= DB::select("SELECT MAX(PC.ChiefComplain) AS ChiefComplain, MAX(PC.CCDurationValue) AS CCDurationValue, MAX(PC.OtherCC) AS OtherCC, MAX(RD.DurationInEnglish) AS DurationInEnglish, CAST(PC.CreateDate AS date) as CreateDate
-            FROM MDataPatientCCDetails as PC
+            FROM MDataPatientCCDetails as PC 
             INNER JOIN RefDuration as RD on RD.DurationId = PC.DurationId
             WHERE PatientId = '$request->patientId' AND CAST(PC.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataPatientCCDetails
+                FROM MDataPatientCCDetails WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY PC.CreateDate ORDER BY PC.CreateDate");
@@ -44,7 +44,7 @@ class PrescriptionController extends Controller
             FROM MDataHeightWeight WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataHeightWeight
+                FROM MDataHeightWeight WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY CreateDate ORDER BY CreateDate");
@@ -53,7 +53,7 @@ class PrescriptionController extends Controller
             FROM MDataBP WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataBP
+                FROM MDataBP WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY CreateDate ORDER BY CreateDate");
@@ -62,7 +62,7 @@ class PrescriptionController extends Controller
             FROM MDataGlucoseHb WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataGlucoseHb
+                FROM MDataGlucoseHb WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY CreateDate ORDER BY CreateDate");
@@ -71,7 +71,7 @@ class PrescriptionController extends Controller
         FROM MDataProvisionalDiagnosis WHERE PatientId = '$request->patientId' AND CAST(CreateDate AS date) 
         = CAST(
             (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-            FROM MDataProvisionalDiagnosis
+            FROM MDataProvisionalDiagnosis WHERE PatientId = '$request->patientId'
             GROUP BY CAST(CreateDate AS date)
             ORDER BY MaxCreateDate DESC)
             AS date) GROUP BY CreateDate ORDER BY CreateDate");
@@ -83,7 +83,7 @@ class PrescriptionController extends Controller
             WHERE PatientId = '$request->patientId' AND CAST(I.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataInvestigation
+                FROM MDataInvestigation WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY I.CreateDate ORDER BY I.CreateDate");
@@ -96,7 +96,7 @@ class PrescriptionController extends Controller
             WHERE PatientId = '$request->patientId' AND CAST(T.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataTreatmentSuggestion
+                FROM MDataTreatmentSuggestion WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY T.CreateDate ORDER BY T.CreateDate");
@@ -108,7 +108,7 @@ class PrescriptionController extends Controller
             WHERE PatientId = '$request->patientId' AND CAST(A.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataAdvice
+                FROM MDataAdvice WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY A.CreateDate ORDER BY A.CreateDate");
@@ -121,7 +121,7 @@ class PrescriptionController extends Controller
             WHERE PatientId = '$request->patientId' AND CAST(PR.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataPatientReferral
+                FROM MDataPatientReferral WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY PR.CreateDate ORDER BY PR.CreateDate");
@@ -133,7 +133,7 @@ class PrescriptionController extends Controller
             WHERE PatientId = '$request->patientId' AND CAST(FD.CreateDate AS date) 
             = CAST(
                 (SELECT TOP 1 MAX(CreateDate) AS MaxCreateDate
-                FROM MDataPatientReferral
+                FROM MDataPatientReferral WHERE PatientId = '$request->patientId'
                 GROUP BY CAST(CreateDate AS date)
                 ORDER BY MaxCreateDate DESC)
                 AS date) GROUP BY FD.CreateDate ORDER BY FD.CreateDate");
