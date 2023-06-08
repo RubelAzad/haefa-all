@@ -21,6 +21,7 @@ class Station4BController extends Controller
         DB::beginTransaction();
 
         try{
+            
             $CurrentTime = Carbon::now();
             $DateTime = $CurrentTime->toDateTimeString();
             //Obstetrics Information 
@@ -36,22 +37,22 @@ class Station4BController extends Controller
             $PatientObsGynae->LivingMale = $request->ObstetricsInfoChildMoralityCervicalCancer['livingMale'];
             $PatientObsGynae->LivingFemale = $request->ObstetricsInfoChildMoralityCervicalCancer['livingFemale'];
 
-            if($request->male==1){
+            if($request->ObstetricsInfoChildMoralityCervicalCancer['male']==1){
                 $PatientObsGynae->ChildMortality0To1 = "M";
             }
-            elseif($request->male==2){
+            elseif($request->ObstetricsInfoChildMoralityCervicalCancer['male']==2){
                 $PatientObsGynae->ChildMortalityBelow5 = "M";
             }
-            elseif($request->male==3){
+            elseif($request->ObstetricsInfoChildMoralityCervicalCancer['male']==3){
                 $PatientObsGynae->ChildMortalityOver5 = "M";
             }
-            if($request->female==1){
+            if($request->ObstetricsInfoChildMoralityCervicalCancer['female']==1){
                 $PatientObsGynae->ChildMortality0To1 = "F";
             } 
-            elseif($request->female==2){
+            elseif($request->ObstetricsInfoChildMoralityCervicalCancer['female']==2){
                 $PatientObsGynae->ChildMortalityBelow5 = "F";
             }
-            elseif($request->male==3){
+            elseif($request->ObstetricsInfoChildMoralityCervicalCancer['female']==3){
                 $PatientObsGynae->ChildMortalityOver5 = "F";
             }
             $PatientObsGynae->IsPregnant = $request->ObstetricsInfoChildMoralityCervicalCancer['isPregnant'];
