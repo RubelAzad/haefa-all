@@ -15,6 +15,7 @@ use App\Models\MDataRxDetails;
 use App\Models\MDataInvestigation;
 
 
+
 class Patient extends Model
 {
     
@@ -37,9 +38,10 @@ class Patient extends Model
     {
         return $this->hasOne(MDataBP::class, 'PatientId', 'PatientId')->latest('CreateDate'); 
     }
+    
     public function height_weights()
     {
-        return $this->hasOne(MDataHeightWeight::class, 'PatientId', 'PatientId')->latest('CreateDate'); 
+        return $this->hasOne(MDataHeightWeight::class, 'PatientId', 'PatientId')->with('blood')->latest('CreateDate'); 
     }
     public function glucose_hbs()
     {
