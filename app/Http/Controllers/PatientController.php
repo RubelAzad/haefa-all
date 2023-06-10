@@ -227,12 +227,10 @@ class PatientController extends Controller
 
         try{
             $IdWisePatientInfo =Patient::where('PatientId','=' ,$PatientId)->update(['PatientImage' => $patientImage]);
-            $status = [
-                'code' => 200,
-                'message' => 'Patient Image Updated',  
-            ];
+            
             return response()->json([
-                'status' => $status,
+                'code' => 200,
+                'message' => 'Patient Image Updated',
             ]);
         }catch (Exception $e) {
             throw new Exception($e->getMessage());
