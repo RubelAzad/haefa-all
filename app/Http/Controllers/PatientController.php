@@ -104,6 +104,7 @@ class PatientController extends Controller
 
         $registrationNo=$request->patientInfo['RegistrationId'];
         $usersID=$request->patientInfo['usersID'];
+        $createUser=$request->patientInfo['CreateUser'];
         $OrgId=$request->patientInfo['OrgId'];
         try{
 
@@ -132,9 +133,9 @@ class PatientController extends Controller
         $patient->usersID = $usersID;
         $patient->Status = 1;
         $patient->CreateDate = $date;
-        $patient->CreateUser = "Azad";
+        $patient->CreateUser = $createUser;
         $patient->UpdateDate = $date;
-        $patient->UpdateUser = "Rubel";
+        $patient->UpdateUser = "";
         $patient->save();
 
         //patient Registration id wise patient id
@@ -147,9 +148,9 @@ class PatientController extends Controller
         $station->PatientId = $PatientId;
         $station->StationStatus = 1;
         $station->CreateDate = $date;
-        $station->CreateUser = "Azad";
+        $station->CreateUser = $createUser;
         $station->UpdateDate = $date;
-        $station->UpdateUser = "Rubel";
+        $station->UpdateUser = "";
         $station->save();
         // //station End
         
@@ -179,15 +180,16 @@ class PatientController extends Controller
         $address->Status = 1;
         $address->OrgId = $OrgId;
         $address->CreateDate = $date;
-        $address->CreateUser = "Azad";
+        $address->CreateUser = $createUser;
         $address->UpdateDate = $date;
-        $address->UpdateUser = "Rubel";
+        $address->UpdateUser = "";
         $address->save();
         //address start
 
         return response()->json([
             'message' => 'Patient Registration Sava Successfully',
-            'code'=>200
+            'code'=>200,
+            'patientDetails'=>$patient
         ],200);
 
         }catch (Exception $e) {
