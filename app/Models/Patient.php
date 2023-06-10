@@ -35,15 +35,15 @@ class Patient extends Model
     }
     public function bps()
     {
-        return $this->hasOne(MDataBP::class, 'PatientId', 'PatientId'); 
+        return $this->hasOne(MDataBP::class, 'PatientId', 'PatientId')->latest('CreateDate'); 
     }
     public function height_weights()
     {
-        return $this->hasOne(MDataHeightWeight::class, 'PatientId', 'PatientId'); 
+        return $this->hasOne(MDataHeightWeight::class, 'PatientId', 'PatientId')->latest('CreateDate'); 
     }
     public function glucose_hbs()
     {
-        return $this->hasOne(MDataGlucoseHb::class, 'PatientId', 'PatientId');
+        return $this->hasOne(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate');
     }
     // public function cc_details()
     // {
