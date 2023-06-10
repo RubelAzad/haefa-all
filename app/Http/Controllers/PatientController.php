@@ -189,7 +189,7 @@ class PatientController extends Controller
         return response()->json([
             'message' => 'Patient Registration Sava Successfully',
             'code'=>200,
-            'patientDetails'=>$patient
+            'patientDetails'=>$patientId
         ],200);
 
         }catch (Exception $e) {
