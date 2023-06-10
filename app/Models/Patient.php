@@ -33,18 +33,18 @@ class Patient extends Model
     {
         return $this->hasOne(MaritalStatus::class, 'MaritalStatusId', 'MaritalStatusId')->select('MaritalStatusId','MaritalStatusCode'); 
     }
-    // public function bps()
-    // {
-    //     return $this->hasMany(MDataBP::class, 'PatientId', 'PatientId'); 
-    // }
-    // public function height_weights()
-    // {
-    //     return $this->hasMany(MDataHeightWeight::class, 'PatientId', 'PatientId'); 
-    // }
-    // public function glucose_hbs()
-    // {
-    //     return $this->hasMany(MDataGlucoseHb::class, 'PatientId', 'PatientId'); 
-    // }
+    public function bps()
+    {
+        return $this->hasOne(MDataBP::class, 'PatientId', 'PatientId'); 
+    }
+    public function height_weights()
+    {
+        return $this->hasOne(MDataHeightWeight::class, 'PatientId', 'PatientId'); 
+    }
+    public function glucose_hbs()
+    {
+        return $this->hasOne(MDataGlucoseHb::class, 'PatientId', 'PatientId');
+    }
     // public function cc_details()
     // {
     //     return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 
