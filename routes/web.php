@@ -30,6 +30,8 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::get('district', 'PatientController@district');//district get
     Route::get('self-type', 'PatientController@SelfType'); //self type get
     Route::post('patient-reg-create', 'PatientController@patientRegCreate'); //patient post
+    Route::post('patient-show', 'PatientController@patientIdWiseInformation'); //patient post
+    Route::put('patient-photo', 'PatientController@patientPhoto'); //patient post
 
     //patient search
     Route::post('search-patient-info', 'SearchPatientController@searchPatientAllInfo');

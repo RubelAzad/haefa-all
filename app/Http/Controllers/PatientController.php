@@ -200,5 +200,45 @@ class PatientController extends Controller
         return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient Registration data');
     }
 
+    public function patientIdWiseInformation(Request $request){
+
+        $PatientId=$request->PatientId;
+
+        try{
+            $IdWisePatientInfo = Patient::where('PatientId','=',$PatientId)->get();
+            $status = [
+                'code' => 200,
+                'message' => 'Get Patient Info',
+                
+            ];
+            return response()->json([
+                'status' => $status,
+                'PatientData' => $IdWisePatientInfo,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found Patient data');
+    }
+    public function patientPhoto(Request $request){
+
+        $PatientId=$request->PatientId;
+        $patientImage=$request->PatientImage;
+
+        try{
+            $IdWisePatientInfo =Patient::where('PatientId','=' ,$PatientId)->update(['PatientImage' => $patientImage]);
+            $status = [
+                'code' => 200,
+                'message' => 'Patient Image Updated',  
+            ];
+            return response()->json([
+                'status' => $status,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found Patient data');
+    }
+
 
 }
