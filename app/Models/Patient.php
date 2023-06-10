@@ -13,6 +13,7 @@ use App\Models\MDataPhysicalExamGeneral;
 use App\Models\MDataPhysicalFinding;
 use App\Models\MDataRxDetails;
 use App\Models\MDataInvestigation;
+use App\Models\Address;
 
 
 
@@ -25,7 +26,11 @@ class Patient extends Model
 
 
     protected $fillable = [ 'PatientId', 'WorkPlaceId', 'WorkPlaceBranchId','PatientCode','RegistrationId','GivenName','FamilyName','GenderId','BirthDate','Age','AgeYear','AgeMonth','AgeDay','JoiningDate','ReligionId','RefDepartmentId','RefDesignationId','MaritalStatusId','EducationId','FatherName','MotherName','SpouseName','HeadOfFamilyId','IdNumber','CellNumber','FamilyMembers','ChildrenNumber','ChildAge0To1','ChildAge1To5','ChildAgeOver5','EmailAddress','PatientImage','Status','CreateDate', 'CreateUser', 'UpdateDate', 'UpdateUser', 'OrgId'];
-
+    
+    public function Address()
+    {
+        return $this->hasOne(Address::class, 'PatientId', 'PatientId'); 
+    }
     public function Gender()
     {
         return $this->hasOne(Gender::class, 'GenderId', 'GenderId')->select('GenderId','GenderCode'); 
@@ -47,7 +52,6 @@ class Patient extends Model
     {
         return $this->hasOne(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate');
     }
-    
     // public function cc_details()
     // {
     //     return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 

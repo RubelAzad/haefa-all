@@ -210,7 +210,7 @@ class PatientController extends Controller
         $PatientId=$request->PatientId;
 
         try{
-            $IdWisePatientInfo = Patient::with('Gender','MartitalStatus')->where('PatientId','=',$PatientId)->first();
+            $IdWisePatientInfo = Patient::with('Gender','MartitalStatus','Address')->where('PatientId','=',$PatientId)->first();
             $status = [
                 'code' => 200,
                 'message' => 'Get Patient Info',
