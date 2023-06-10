@@ -47,6 +47,7 @@ class Patient extends Model
     {
         return $this->hasOne(MDataGlucoseHb::class, 'PatientId', 'PatientId')->latest('CreateDate');
     }
+    
     // public function cc_details()
     // {
     //     return $this->hasMany(MDataPatientCCDetails::class, 'PatientId', 'PatientId'); 

@@ -141,6 +141,11 @@ class PatientController extends Controller
         //patient Registration id wise patient id
 
         $patientId=Patient::where('RegistrationId','=',$registrationNo)->first();
+
+        $rPatientId=$patientId->PatientId;
+
+        $patientDetails=Patient::where('PatientId','=',$rPatientId)->first();
+
         $PatientId=$patientId->PatientId;
 
         // //station start
@@ -189,7 +194,7 @@ class PatientController extends Controller
         return response()->json([
             'message' => 'Patient Registration Sava Successfully',
             'code'=>200,
-            'patientDetails'=>$patientId
+            'patientDetails'=>$patientDetails
         ],200);
 
         }catch (Exception $e) {
@@ -205,7 +210,7 @@ class PatientController extends Controller
         $PatientId=$request->PatientId;
 
         try{
-            $IdWisePatientInfo = Patient::where('PatientId','=',$PatientId)->first();
+            $IdWisePatientInfo = Patient::with('Gender','MartitalStatus')->where('PatientId','=',$PatientId)->first();
             $status = [
                 'code' => 200,
                 'message' => 'Get Patient Info',
