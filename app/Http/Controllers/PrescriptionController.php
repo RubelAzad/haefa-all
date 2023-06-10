@@ -91,7 +91,7 @@ class PrescriptionController extends Controller
                 AS date) GROUP BY I.CreateDate ORDER BY I.CreateDate");
 
 
-        $Treatment= DB::select("SELECT MAX(T.Frequency) AS Frequency, MAX(T.DrugDurationValue) AS DrugDurationValue,MAX(T.OtherDrug) AS OtherDrug,MAX(T.SpecialInstruction) AS SpecialInstruction, MAX(Dr.DrugCode) AS DrugCode, MAX(Dr.Description) AS Description, MAX(Dr.DrugDose) AS DrugDose, MAX(Ins.InstructionInBangla) AS InstructionInBangla, CAST(T.CreateDate AS date) as CreateDate
+        $Treatment= DB::select("SELECT MAX(T.Frequency) AS Frequency, MAX(T.DrugDurationValue) AS DrugDurationValue,MAX(T.OtherDrug) AS OtherDrug,MAX(T.SpecialInstruction) AS SpecialInstruction,MAX(T.DrugDose) AS DrugDose, MAX(Dr.DrugCode) AS DrugCode, MAX(Dr.Description) AS Description, MAX(Dr.DrugDose) AS DrugDose, MAX(Ins.InstructionInBangla) AS InstructionInBangla, CAST(T.CreateDate AS date) as CreateDate
             FROM MDataTreatmentSuggestion as T
             INNER JOIN RefDrug as Dr on Dr.DrugId = T.DrugId
             INNER JOIN RefInstruction as Ins on Ins.RefInstructionId = T.RefInstructionId
