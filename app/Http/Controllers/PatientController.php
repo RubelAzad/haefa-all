@@ -205,7 +205,7 @@ class PatientController extends Controller
         $PatientId=$request->PatientId;
 
         try{
-            $IdWisePatientInfo = Patient::where('PatientId','=',$PatientId)->get();
+            $IdWisePatientInfo = Patient::where('PatientId','=',$PatientId)->first();
             $status = [
                 'code' => 200,
                 'message' => 'Get Patient Info',
