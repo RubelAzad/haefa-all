@@ -22,11 +22,45 @@ use Carbon\Carbon;
 
 class Station4CController extends Controller
 {
-    public function provisionalDiagonisis(){
-        try{
+    // public function provisionalDiagonisis(){
+    //     try{
 
-            $provisionalDiagonisis = RefProvisionalDiagnosis::select('RefProvisionalDiagnosisId',
-                                    'ProvisionalDiagnosisCode','ProvisionalDiagnosisName')->get();
+    //         $provisionalDiagonisis = RefProvisionalDiagnosis::select('RefProvisionalDiagnosisId',
+    //                                 'ProvisionalDiagnosisCode','ProvisionalDiagnosisName')->get();
+
+    //         $status = [
+    //             'code'=> 200,
+    //             'message' =>'Provisional Diagnosis data get successfully'
+    //            ];
+    //         return response()->json(['status'=>$status,'data'=>$provisionalDiagonisis]);  
+
+    //     }catch(\Exception $e){
+    //         $status = [
+    //             'code'=>403,
+    //             'message'=>$e->getMessage()
+    //         ];
+
+    //         return response()->json(['status'=>$status]);
+    //     }
+    // }
+
+    public function provisionalDiagonisis(Request $request){
+        try{
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = RefProvisionalDiagnosis::query();
+            $query->select('RefProvisionalDiagnosisId', 'ProvisionalDiagnosisCode','ProvisionalDiagnosisName');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('ProvisionalDiagnosisCode', 'LIKE', "%".$keyword."%");
+                $query->orWhere('ProvisionalDiagnosisName', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $provisionalDiagonisis = $query->get();
 
             $status = [
                 'code'=> 200,
@@ -44,10 +78,42 @@ class Station4CController extends Controller
         }
     }
 
-    public function investigations(){
+    // public function investigations(){
+    //     try{
+    //         $RefLabInvestigation = RefLabInvestigation::select('RefLabInvestigationId',
+    //                             'RefLabInvestigationCode','Investigation','Description')->get();
+    //         $status = [
+    //             'code'=>200,
+    //             'message'=>'Lab investigations data get successfully!'
+    //         ];
+    //         return response()->json(['status'=> $status, 'data'=>$RefLabInvestigation]);
+
+    //     }catch(\Exception $e){
+    //         $status = [
+    //             'code'=>403,
+    //             'message'=>$e->getMessage()
+    //         ];
+    //         return response()->json(['status'=>$status]);
+    //     }   
+    // }
+
+    public function investigations(Request $request){
         try{
-            $RefLabInvestigation = RefLabInvestigation::select('RefLabInvestigationId',
-                                'RefLabInvestigationCode','Investigation','Description')->get();
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = RefLabInvestigation::query();
+            $query->select('RefLabInvestigationId', 'RefLabInvestigationCode','Investigation','Description');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('RefLabInvestigationCode', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $RefLabInvestigation = $query->get();
+
             $status = [
                 'code'=>200,
                 'message'=>'Lab investigations data get successfully!'
@@ -64,13 +130,46 @@ class Station4CController extends Controller
     }
 
     // Treatment Suggestions
-    public function treatmentSuggestins(){
+    // public function treatmentSuggestins(){
+    //     try{
+    //         $RefDrug = RefDrug::select('DrugId','DrugCode','DrugDose','Description')->get();
+    //         $status = [
+    //             'code'=>200,
+    //             'message'=>'Treatment suggestion data get successfully!'
+    //         ];
+    //         return response()->json(['status'=>$status,'data'=>$RefDrug]);
+
+    //     }catch(\Exception $e){
+    //         $status = [
+    //             'code'=>403,
+    //             'message'=> $e->getMessage()
+    //         ];
+    //         return response()->json(['status'=>$status]);
+    //     }
+    // }
+
+    public function treatmentSuggestins(Request $request){
         try{
-            $RefDrug = RefDrug::select('DrugId','DrugCode','DrugDose','Description')->get();
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = RefDrug::query();
+            $query->select('DrugId','DrugCode','DrugDose','Description');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('DrugCode', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $RefDrug = $query->get();
+
             $status = [
                 'code'=>200,
                 'message'=>'Treatment suggestion data get successfully!'
             ];
+
             return response()->json(['status'=>$status,'data'=>$RefDrug]);
 
         }catch(\Exception $e){
@@ -102,9 +201,42 @@ class Station4CController extends Controller
     }
     
     // Referral Section
-    public function referralSection(){
+    // public function referralSection(){
+    //     try{
+    //         $RefReferral = RefReferral::select('RId','RCode','Description')->get();
+    //         $status = [
+    //             'code'=>200,
+    //             'message'=>'Referral section data get successfully!'
+    //         ];
+    //         return response()->json(['status'=>$status,'data'=>$RefReferral]);
+
+    //     }catch(\Exception $e){
+    //         $status = [
+    //             'code'=>403,
+    //             'message'=> $e->getMessage()
+    //         ];
+    //         return response()->json(['status'=>$status]);
+    //     }
+    // }
+  
+    
+    public function referralSection(Request $request){
         try{
-            $RefReferral = RefReferral::select('RId','RCode','Description')->get();
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = RefReferral::query();
+            $query->select('RId','RCode','Description');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('RCode', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $RefReferral = $query->get();
+
             $status = [
                 'code'=>200,
                 'message'=>'Referral section data get successfully!'
@@ -121,9 +253,23 @@ class Station4CController extends Controller
     }
     
     // Health Center
-    public function healthCenter(){
+    public function healthCenter(Request $request){
         try{
-            $HealthCenter = HealthCenter::select('HealthCenterId','HealthCenterCode','HealthCenterName')->get();
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = HealthCenter::query();
+            $query->select('HealthCenterId','HealthCenterCode','HealthCenterName');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('HealthCenterCode', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $HealthCenter = $query->get();
+            
             $status = [
                 'code'=>200,
                 'message'=>'Health center data get successfully!'
@@ -140,9 +286,23 @@ class Station4CController extends Controller
     }
     
     // Advice
-    public function Advice(){
+    public function Advice(Request $request){
         try{
-            $RefAdvice = RefAdvice::select('AdviceId','AdviceCode','AdviceInEnglish')->get();
+            $keyword = $request->keyword;
+            $limit = $request->limit;
+
+            $query = RefAdvice::query();
+            $query->select('AdviceId','AdviceCode','AdviceInEnglish');
+            $query->when($keyword, function($query) use ($keyword){
+                $query->where('AdviceCode', 'LIKE', "%".$keyword."%");
+            });
+
+            $query->when($limit, function($query) use($limit){
+                $query->limit($limit);
+            });
+
+            $RefAdvice = $query->get();
+
             $status = [
                 'code'=>200,
                 'message'=>'Advice data get successfully!'
@@ -221,6 +381,7 @@ class Station4CController extends Controller
                 $MDataTreatmentSuggestion->DrugDurationValue = $TreatmentSuggestion[$i]['drugDurationValue'];
                 $MDataTreatmentSuggestion->OtherDrug = $TreatmentSuggestion[$i]['otherDrug'];
                 $MDataTreatmentSuggestion->SpecialInstruction = $TreatmentSuggestion[$i]['specialInstruction'];
+                $MDataTreatmentSuggestion->DrugDose = $TreatmentSuggestion[$i]['drugDose'];
                 $MDataTreatmentSuggestion->Comment = $TreatmentSuggestion[$i]['comment'];
                 $MDataTreatmentSuggestion->Status  = "A";
                 $MDataTreatmentSuggestion->CreateDate  = $DateTime;
