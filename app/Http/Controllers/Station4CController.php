@@ -313,7 +313,7 @@ class Station4CController extends Controller
             $limit = $request->limit;
 
             $query = RefAdvice::query();
-            $query->select('AdviceId','AdviceCode','AdviceInEnglish');
+            $query->select('AdviceId','AdviceCode','AdviceInEnglish','AdviceInBangla');
             $query->when($keyword, function($query) use ($keyword){
                 $query->where('AdviceCode', 'LIKE', "%".$keyword."%");
             });
