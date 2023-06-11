@@ -88,6 +88,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::get('referral-section','Station4CController@referralSection'); //get referral section
     Route::get('health-center','Station4CController@healthCenter'); //get health center
     Route::get('advice-data','Station4CController@Advice'); //get Advice
+    Route::get('special-instruction','Station4CController@specialInstruction'); //get special instruction
     Route::post('patient-s4c-create','Station4CController@patientS4cCreate'); //save 4c
     //Station 4C route end 
 

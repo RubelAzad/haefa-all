@@ -11,6 +11,7 @@ use App\Models\MDataPatientReferral;
 use Illuminate\Support\Facades\DB;
 use App\Models\RefLabInvestigation;
 use App\Models\MDataFollowUpDate;
+use App\Models\RefInstruction;
 use App\Models\MDataAdvice;
 use App\Models\RefFrequency;
 use App\Models\RefAdvice;
@@ -127,6 +128,26 @@ class Station4CController extends Controller
             ];
             return response()->json(['status'=>$status]);
         }   
+    }
+
+    public function specialInstruction(){
+        try{
+            $specialInstructions = RefInstruction::select('RefInstructionId',
+                                    'InstructionCode','InstructionInEnglish','InstructionInBangla')->get();
+            $status = [
+                'code'=> 200,
+                'message' =>'Special instructions data get successfully'
+               ];
+            return response()->json(['status'=>$status,'data'=>$specialInstructions]);  
+
+        }catch(\Exception $e){
+            $status = [
+                'code'=>403,
+                'message'=>$e->getMessage()
+            ];
+
+            return response()->json(['status'=>$status]);
+        }
     }
 
     // Treatment Suggestions
