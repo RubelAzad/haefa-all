@@ -130,7 +130,7 @@ class PrescriptionController extends Controller
 
         
 
-        $FollowUpDate= DB::select("SELECT MAX(FD. FollowUpDate) AS FollowUpDate, MAX(FD.Comment) AS Comment, CAST(FD.CreateDate AS date) as CreateDate
+        $FollowUpDate= DB::select("SELECT TOP 1 MAX(FD. FollowUpDate) AS FollowUpDate, MAX(FD.Comment) AS Comment, CAST(FD.CreateDate AS date) as CreateDate
             FROM MDataFollowUpDate as FD
             WHERE PatientId = '$request->patientId' AND CAST(FD.CreateDate AS date) 
             = CAST(
