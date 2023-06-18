@@ -243,5 +243,18 @@ class PatientController extends Controller
         return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found Patient data');
     }
 
+    public function patientAllInfo(){
+        $patientAllInfo = Patient::with('Gender','MartitalStatus','Address')->get();
+        $status = [
+            'code' => 200,
+            'message' => 'Get Patient Info',
+            
+        ];
+        return response()->json([
+            'status' => $status,
+            'patientAllInfo' => $patientAllInfo,
+        ]);
+    }
+
 
 }
