@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::post('patient-show', 'PatientController@patientIdWiseInformation'); //patient post
     Route::put('patient-photo', 'PatientController@patientPhoto'); //patient post
     Route::get('patient-allInfo', 'PatientController@patientAllInfo'); //patient post
+    Route::post('registration-code-check', 'PatientController@registrationCodeCheck');
 
     //patient search
     Route::post('search-patient-info', 'SearchPatientController@searchPatientAllInfo');
