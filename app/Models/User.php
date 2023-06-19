@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
+use App\Models\Employee;
+use App\Models\Organization;
+use App\Models\BarcodeFormat;
+
+
 //this is new
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -53,5 +58,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class,'EmployeeId','EmployeeId');
+    }
+    public function barcodeFormat()
+    {
+        return $this->belongsTo(BarcodeFormat::class,'cc_id','id');
+    }
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class,'OrgId','OrgId');
     }
 }
