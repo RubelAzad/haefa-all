@@ -38,6 +38,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     //patient search
     Route::post('search-patient-info', 'SearchPatientController@searchPatientAllInfo');
     // Route::get('patient-search', 'SearchPatientController@searchPatient');
+    Route::post('search-patient-info-without-station', 'SearchPatientController@searchPatientAllInfoWithoutStation');
 
     //station 1
     Route::get('patient-blood-group', 'Station1Controller@Blood');
