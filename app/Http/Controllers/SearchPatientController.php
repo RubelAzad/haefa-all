@@ -32,12 +32,6 @@ class SearchPatientController extends Controller
             return 'Please Check Station - '.$StationStatus->StationStatus;
         }
         
-        
-
-
-
-
-
         if($stationId == ""){
             return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found Station Id');
         }else{
@@ -176,6 +170,48 @@ class SearchPatientController extends Controller
                         return $patientDetails;
                     }
                 }
+            }
+        }
+                    
+    }
+
+    public function searchPatientAllInfoWithoutStation(Request $request){
+        $stationId=$request->station;
+        $Card=$request->Card;
+        $Name=$request->Name;
+        $NID=$request->NID;
+        $Mobile=$request->Mobile;
+        
+        if($request->Card){
+            $patientDetails=Patient::with('Gender','MartitalStatus','bps','height_weights','glucose_hbs')->where('RegistrationId','=',$Card)->get();
+            if(count($patientDetails) === 0){
+                return 'This Patient is Not Found';
+            }else{
+                return $patientDetails;
+            }
+        }
+        if($request->Name){
+            $patientDetails=Patient::with('Gender','MartitalStatus','bps','height_weights','glucose_hbs')->where('GivenName', 'like', '%' . $Name . '%')->orWhere('FamilyName', 'like', '%' . $Name . '%')->get();
+            if(count($patientDetails) === 0){
+                return 'This Patient is Not Found';
+            }else{
+                return $patientDetails;
+            }
+        }
+        if($request->NID){
+            $patientDetails=Patient::with('Gender','MartitalStatus','bps','height_weights','glucose_hbs')->where('IdNumber','=',$NID)->get();
+            if(count($patientDetails) === 0){
+                return 'This Patient is Not Found';
+            }else{
+                return $patientDetails;
+            }
+        }
+        if($request->Mobile){
+            $patientDetails=Patient::with('Gender','MartitalStatus','bps','height_weights','glucose_hbs')->where('CellNumber','=',$Mobile)->get();
+            if(count($patientDetails) === 0){
+                return 'This Patient is Not Found';
+            }else{
+                return $patientDetails;
             }
         }
                     
