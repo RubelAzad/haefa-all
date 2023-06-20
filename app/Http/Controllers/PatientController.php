@@ -17,6 +17,7 @@ use App\Models\Address;
 use App\Models\Station;
 use App\Models\RegistrationCode;
 use App\Models\Union;
+use App\Models\BarcodeStatus;
 
 
 class PatientController extends Controller
@@ -175,6 +176,8 @@ class PatientController extends Controller
         $station->UpdateUser = "";
         $station->save();
         // //station End
+
+        //BarcodeStatus::where('RegistrationId','=',$registrationNo)->update(['mdata_barcode_status' => 'used']);
         
         
         // //address start

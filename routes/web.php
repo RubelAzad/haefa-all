@@ -109,6 +109,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     //Prescription Preview start
 
     Route::post('prescription-preview','PrescriptionPreviewController@patientPrescriptionPreview');
+    Route::post('prescription-preview-all-data','PrescriptionPreviewController@patientPrescriptionPreviewAllData');
 
     //Prescription Preview End
 
