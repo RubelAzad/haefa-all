@@ -29,6 +29,7 @@ Route::group(['prefix' => 'api'], function ($router) {
     Route::get('marital-status', 'PatientController@maritalStatus'); //marital status get
     Route::get('district', 'PatientController@district');//district get
     Route::get('self-type', 'PatientController@SelfType'); //self type get
+    Route::get('union', 'PatientController@Union'); //self type get
     Route::post('patient-reg-create', 'PatientController@patientRegCreate'); //patient post
     Route::post('patient-show', 'PatientController@patientIdWiseInformation'); //patient post
     Route::put('patient-photo', 'PatientController@patientPhoto'); //patient post

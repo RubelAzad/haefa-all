@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Address;
 use App\Models\Station;
 use App\Models\RegistrationCode;
+use App\Models\Union;
 
 
 class PatientController extends Controller
@@ -98,6 +99,22 @@ class PatientController extends Controller
             throw new Exception($e->getMessage());
         }  
         return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Sava Patient data');
+    }
+    public function Union(){
+        try{
+            $Union = Union::select('UnionName','ShortName')->get();
+            $status = [
+                'code' => 200,
+                'message' => 'Get Union Information'
+            ];
+            return response()->json([
+                'status' => $status,
+                'unions' => $Union,
+            ]);
+        }catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }  
+        return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found data');
     }
 
     public function patientRegCreate(Request $request){
