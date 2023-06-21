@@ -278,34 +278,44 @@ class PatientController extends Controller
 
     public function registrationCodeCheck(Request $request){
 
+
         preg_match('/^[A-Za-z]+/', $request->registrationCode, $stringPortion);
         // Extract the number portion
         preg_match('/\d+$/', $request->registrationCode, $numberPortion);
 
-        $code= $stringPortion[0]; // Array element at index 0
-        $number= $numberPortion[0]; // Array element at index 0
-        $strCode=Str::length($code);
-        $strLength=Str::length($number);
+        if(isset($stringPortion[0]) && isset($numberPortion[0])){ 
 
-        if($strCode == 9 && $strLength == 8){
-            $registrationCode = RegistrationCode::select('mdata_barcode_prefix','mdata_barcode_number','mdata_barcode_prefix_number','mdata_barcode_status')->where('mdata_barcode_prefix_number','=',$request->registrationCode)->where('mdata_barcode_status','=','unused')->first();
-            try{
-                if($registrationCode == null){
-                    return $this->responseJson(false, HttpResponse::HTTP_BAD_REQUEST, 'Registration Code Already Used');
-                }else{
-                    return response()->json([
-                        'code' => 200,
-                        'message' => 'Registration Code Matched',
-                        'registrationCode' =>$registrationCode,
-                    ]);
-                }
-            }catch (Exception $e) {
-                throw new Exception($e->getMessage());
-            }  
-            return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found data');
+            $code= $stringPortion[0]; // Array element at index 0
+            $number= $numberPortion[0]; // Array element at index 0
+            $strCode=Str::length($code);
+            $strLength=Str::length($number);
+
+            if($strCode == 9 && $strLength == 8){
+                $registrationCode = RegistrationCode::select('mdata_barcode_prefix','mdata_barcode_number','mdata_barcode_prefix_number','mdata_barcode_status')->where('mdata_barcode_prefix_number','=',$request->registrationCode)->where('mdata_barcode_status','=','unused')->first();
+                try{
+                    if($registrationCode == null){
+                        return $this->responseJson(false, HttpResponse::HTTP_BAD_REQUEST, 'Registration Code Already Used');
+                    }else{
+                        return response()->json([
+                            'code' => 200,
+                            'message' => 'Registration Code Matched',
+                            'registrationCode' =>$registrationCode,
+                        ]);
+                    }
+                }catch (Exception $e) {
+                    throw new Exception($e->getMessage());
+                }  
+                return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found data');
+            }else{
+                return $this->responseJson(false, HttpResponse::HTTP_BAD_REQUEST, 'Error. Registration Code or Number Format Invalid');
+            }
+
+            //Logic
         }else{
             return $this->responseJson(false, HttpResponse::HTTP_BAD_REQUEST, 'Error. Registration Code or Number Format Invalid');
         }
+
+        
         
         
         
