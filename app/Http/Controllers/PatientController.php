@@ -177,7 +177,7 @@ class PatientController extends Controller
         $station->save();
         // //station End
 
-        BarcodeStatus::where('RegistrationId','=',$registrationNo)->update(['mdata_barcode_status' => 'used']);
+        BarcodeStatus::where('mdata_barcode_prefix_number','=',$registrationNo)->update(['mdata_barcode_status' => 'used']);
         
         
         // //address start
@@ -302,7 +302,7 @@ class PatientController extends Controller
             }catch (Exception $e) {
                 throw new Exception($e->getMessage());
             }  
-            return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found Patient data');
+            return $this->responseJson(false, HttpResponse::HTTP_BAD_GATEWAY, 'Error. Could Not Found data');
         }else{
             return $this->responseJson(false, HttpResponse::HTTP_BAD_REQUEST, 'Error. Registration Code or Number Format Invalid');
         }
