@@ -14,4 +14,6 @@ class BarcodeFormat extends Model
     {
       return $this->belongsTo(User::class,'cc_id','id');
     }
+
+    
 }
