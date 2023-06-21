@@ -177,7 +177,7 @@ class PatientController extends Controller
         $station->save();
         // //station End
 
-        //BarcodeStatus::where('RegistrationId','=',$registrationNo)->update(['mdata_barcode_status' => 'used']);
+        BarcodeStatus::where('RegistrationId','=',$registrationNo)->update(['mdata_barcode_status' => 'used']);
         
         
         // //address start
