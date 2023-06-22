@@ -66,7 +66,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
     public function barcodeFormat()
     {
-        return $this->belongsTo(BarcodeFormat::class,'cc_id','id');
+        return $this->belongsTo(BarcodeFormat::class,'cc_id','id')->with('union','healthcenter','district','upazila');
     }
     public function organization()
     {
