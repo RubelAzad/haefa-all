@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BarcodeFormat;
 
 class HealthCenter extends Model
 {
@@ -17,4 +18,9 @@ class HealthCenter extends Model
         'IsProvideDiscountWheelsReferredPatient','DiscountPercentageWheelsReferredPatient','HealthCenterType',
         'Status','CreateUser','CreateDate','UpdateUser','UpdateDate','OrgId','Latitude','Longitude'
     ];
+
+    public function barcodeformat(){
+        
+        return $this->belongsTo(BarcodeFormat::class, 'barcode_community_clinic', 'HealthCenterId');
+    }
 }
