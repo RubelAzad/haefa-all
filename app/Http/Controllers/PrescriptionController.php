@@ -91,9 +91,9 @@ class PrescriptionController extends Controller
         INNER JOIN HealthCenter as HC on HC.HealthCenterId = PR.HealthCenterId
         WHERE PR.PatientId ='$patient_id' AND  CAST(PR.CreateDate AS date)='$create_date' ORDER BY CAST(PR.CreateDate AS date) DESC");
 
-        $FollowUpDate= DB::select("SELECT TOP 1 FollowUpDate, Comment, CreateDate
+        $FollowUpDate= DB::select("SELECT FollowUpDate, Comment, CreateDate
         FROM MDataFollowUpDate
-        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date' ORDER BY CAST(CreateDate AS date) DESC");
+        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date_time' ORDER BY CAST(CreateDate AS date) DESC");
 
 
         return response()->json([
