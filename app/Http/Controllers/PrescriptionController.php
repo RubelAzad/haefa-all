@@ -48,22 +48,15 @@ class PrescriptionController extends Controller
         INNER JOIN RefDuration as RD on RD.DurationId = PC.DurationId
         WHERE PC.PatientId ='$patient_id' AND CAST(PC.CreateDate AS date) ='$create_date'");
 
-
-
-
-        $HeightWeight= DB::select("SELECT TOP 1 Height, Weight, BMI, BMIStatus, CreateDate FROM MDataHeightWeight WHERE PatientId ='$patient_id' AND CAST(CreateDate AS date)='$create_date' ORDER BY CAST(CreateDate AS date) DESC");
-
-
-
-
+        $HeightWeight= DB::select("SELECT TOP 1 Height, Weight, BMI, BMIStatus, CreateDate FROM MDataHeightWeight WHERE PatientId ='$patient_id' AND CAST(CreateDate AS date)='$create_date' ORDER BY CreateDate DESC");
 
         $BP= DB::select("SELECT TOP 1 BPSystolic1, BPDiastolic1, BPSystolic2,BPDiastolic2,HeartRate,CurrentTemparature,CreateDate
         FROM MDataBP
-        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date) = '$create_date' ORDER BY CAST(CreateDate AS date) DESC");
+        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date) = '$create_date' ORDER BY CreateDate DESC");
 
         $GlucoseHb= DB::select("SELECT TOP 1 RBG, FBG, Hemoglobin, HrsFromLastEat, CreateDate
         FROM MDataGlucoseHb
-        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date' ORDER BY CAST(CreateDate AS date) DESC");
+        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date' ORDER BY CreateDate DESC");
 
         $ProvisionalDx= DB::select("SELECT ProvisionalDiagnosis, DiagnosisStatus, OtherProvisionalDiagnosis, CreateDate
         FROM MDataProvisionalDiagnosis
@@ -91,9 +84,10 @@ class PrescriptionController extends Controller
         INNER JOIN HealthCenter as HC on HC.HealthCenterId = PR.HealthCenterId
         WHERE PR.PatientId ='$patient_id' AND  CAST(PR.CreateDate AS date)='$create_date' ORDER BY CAST(PR.CreateDate AS date) DESC");
 
-        $FollowUpDate= DB::select("SELECT FollowUpDate, Comment, CreateDate
+        $FollowUpDate= DB::select("SELECT TOP 1 FollowUpDate, Comment, CreateDate
         FROM MDataFollowUpDate
-        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date_time' ORDER BY CAST(CreateDate AS date) DESC");
+        WHERE PatientId ='$patient_id' AND  CAST(CreateDate AS date)='$create_date' ORDER BY CreateDate DESC");
+
 
 
         return response()->json([
