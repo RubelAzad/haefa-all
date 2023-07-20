@@ -251,6 +251,9 @@ class Station4AController extends Controller
                 $MDataRxDetail->CollectionDate = $DateTime;
                 $MDataRxDetail->Rx = $MedicationTaken[$i]['medicineName'];
                 $MDataRxDetail->DurationId = $MedicationTaken[$i]['durationId'];
+                $MDataRxDetail->FrequencyHour = $MedicationTaken[$i]['frequencyHour'];
+                $MDataRxDetail->Dose = $MedicationTaken[$i]['dose'];
+                $MDataRxDetail->AllergyToMedication = $MedicationTaken[$i]['allergyToMedication'];
                 $MDataRxDetail->RxDurationValue = $MedicationTaken[$i]['doseValue'];
                 $MDataRxDetail->Status = "A";
                 $MDataRxDetail->CreateUser = $MedicationTaken[$i]['CreateUser'];
