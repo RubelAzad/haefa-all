@@ -18,6 +18,8 @@ class Station4BController extends Controller
 {
     
     public function patientS4bCreate(Request $request){
+
+       
         DB::beginTransaction();
 
         try{
@@ -67,6 +69,7 @@ class Station4BController extends Controller
             $PatientObsGynae->UpdateUser = "";
             $PatientObsGynae->UpdateDate =  $DateTime;
             $PatientObsGynae->OrgId = $request->ObstetricsInfoChildMoralityCervicalCancer['OrgId'];
+            return $PatientObsGynae;
             $PatientObsGynae->save();
 
             $MDataPatientPregnancy = new MDataPatientPregnancy();
